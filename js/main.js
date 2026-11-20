@@ -17,30 +17,34 @@
         // Register GSAP plugins
         gsap.registerPlugin(ScrollTrigger);
 
-        // Configure ScrollTrigger for optimal mobile & touch performance
-        ScrollTrigger.config({
-            limitCallbacks: true,
-            ignoreMobileResize: true // Prevents harsh jumps on mobile browser address bar collapse
-        });
+        // 1. Initialize Lenis Smooth Scroll
+        // Crucial for Mobile: Disable smoothTouch so mobile uses native, buttery 120Hz/60Hz touch scrolling.
+        // On touch devices, Lenis virtual scrolling can conflict with browser address-bar resizing and native inertia.
+        const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia('(pointer: coarse)').matches;
+        let lenis = null;
 
-        // 1. Initialize Lenis Smooth Scroll (Lightweight & responsive)
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        const lenis = new Lenis({
-            duration: 0.9,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            smooth: true,
-            mouseMultiplier: 1.1,
-            smoothTouch: false,
-            touchMultiplier: 1.2
-        });
+        if (!isTouch && typeof Lenis !== 'undefined') {
+            lenis = new Lenis({
+                duration: 0.9,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1.1
+            });
 
-        // Sync Lenis with GSAP ScrollTrigger
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => {
-            lenis.raf(time * 1000);
-        });
-        gsap.ticker.lagSmoothing(1000, 16);
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(1000, 16);
+        } else {
+            // Native mobile scrolling - ScrollTrigger listens directly to native window scroll
+            ScrollTrigger.config({
+                limitCallbacks: true,
+                ignoreMobileResize: true,
+                autoRefreshEvents: "visibilitychange,DOMContentLoaded,load"
+            });
+        }
 
         // 2. Throttled Navbar Scroll & Active Link Detection
         const navbar = document.getElementById('navbar');
@@ -188,80 +192,147 @@
             });
         }
 
-        const maskTimeline = gsap.timeline({
-            scrollTrigger: {
-                trigger: maskSection,
-                start: "top top",
-                end: "+=650%", // Generously extended scroll distance for deep, slow transitions
-                scrub: 1.6,    // High scrub smoothing for luxurious, slow cinematic glide
-                pin: true,
-                anticipatePin: 1
+        ScrollTrigger.matchMedia({
+            // Desktop & Large Screens
+            "(min-width: 769px)": function () {
+                const maskTimeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: maskSection,
+                        start: "top top",
+                        end: "+=650%",
+                        scrub: 1.6,
+                        pin: true,
+                        anticipatePin: 1
+                    }
+                });
+
+                maskTimeline
+                    .to(maskPrompt, {
+                        opacity: 0,
+                        scale: 0.8,
+                        ease: "power1.out",
+                        duration: 1
+                    }, 0)
+                    .to(layer1, {
+                        clipPath: "circle(100vmax at 50% 50%)",
+                        webkitClipPath: "circle(100vmax at 50% 50%)",
+                        ease: "power1.inOut",
+                        duration: 4,
+                        onUpdate: function() {
+                            const prog = this.progress();
+                            if (prog < 0.5) setActiveIndicator(0);
+                            else setActiveIndicator(1);
+                        }
+                    }, 0)
+                    .to({}, { duration: 1.5 })
+                    .fromTo(layer2, 
+                        { clipPath: "circle(0px at 50% 50%)", webkitClipPath: "circle(0px at 50% 50%)" },
+                        {
+                            clipPath: "circle(100vmax at 50% 50%)",
+                            webkitClipPath: "circle(100vmax at 50% 50%)",
+                            ease: "power1.inOut",
+                            duration: 4,
+                            onUpdate: function() {
+                                const prog = this.progress();
+                                if (prog > 0.1) setActiveIndicator(2);
+                            }
+                        }
+                    )
+                    .to({}, { duration: 1.5 })
+                    .fromTo(layer3,
+                        { clipPath: "circle(0px at 50% 50%)", webkitClipPath: "circle(0px at 50% 50%)" },
+                        {
+                            clipPath: "circle(100vmax at 50% 50%)",
+                            webkitClipPath: "circle(100vmax at 50% 50%)",
+                            ease: "power1.inOut",
+                            duration: 4,
+                            onUpdate: function() {
+                                const prog = this.progress();
+                                if (prog > 0.1) setActiveIndicator(3);
+                            }
+                        }
+                    )
+                    .to({}, { duration: 1.2 })
+                    .to(maskContent, {
+                        opacity: 1,
+                        y: 0,
+                        ease: "power2.out",
+                        duration: 2
+                    });
+
+                return () => maskTimeline.kill();
+            },
+
+            // Mobile Devices: Adjusted distance & responsive radius
+            "(max-width: 768px)": function () {
+                const maskTimelineMobile = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: maskSection,
+                        start: "top top",
+                        end: "+=380%", // Shorter pinned track so mobile users don't get stuck
+                        scrub: 1.0,
+                        pin: true,
+                        anticipatePin: 1
+                    }
+                });
+
+                maskTimelineMobile
+                    .to(maskPrompt, {
+                        opacity: 0,
+                        scale: 0.8,
+                        ease: "power1.out",
+                        duration: 1
+                    }, 0)
+                    .to(layer1, {
+                        clipPath: "circle(120vmax at 50% 50%)",
+                        webkitClipPath: "circle(120vmax at 50% 50%)",
+                        ease: "power1.inOut",
+                        duration: 3,
+                        onUpdate: function() {
+                            const prog = this.progress();
+                            if (prog < 0.5) setActiveIndicator(0);
+                            else setActiveIndicator(1);
+                        }
+                    }, 0)
+                    .to({}, { duration: 1 })
+                    .fromTo(layer2, 
+                        { clipPath: "circle(0px at 50% 50%)", webkitClipPath: "circle(0px at 50% 50%)" },
+                        {
+                            clipPath: "circle(120vmax at 50% 50%)",
+                            webkitClipPath: "circle(120vmax at 50% 50%)",
+                            ease: "power1.inOut",
+                            duration: 3,
+                            onUpdate: function() {
+                                const prog = this.progress();
+                                if (prog > 0.1) setActiveIndicator(2);
+                            }
+                        }
+                    )
+                    .to({}, { duration: 1 })
+                    .fromTo(layer3, 
+                        { clipPath: "circle(0px at 50% 50%)", webkitClipPath: "circle(0px at 50% 50%)" },
+                        {
+                            clipPath: "circle(120vmax at 50% 50%)",
+                            webkitClipPath: "circle(120vmax at 50% 50%)",
+                            ease: "power1.inOut",
+                            duration: 3,
+                            onUpdate: function() {
+                                const prog = this.progress();
+                                if (prog > 0.1) setActiveIndicator(3);
+                            }
+                        }
+                    )
+                    .to({}, { duration: 0.8 })
+                    .to(maskContent, {
+                        opacity: 1,
+                        y: 0,
+                        ease: "power2.out",
+                        duration: 1.5
+                    });
+
+                return () => maskTimelineMobile.kill();
             }
         });
-
-        maskTimeline
-            // --- Step 1: Prompt fades out, Photo 2 expands very slowly from center circle over Photo 1 ---
-            .to(maskPrompt, {
-                opacity: 0,
-                scale: 0.8,
-                ease: "power1.out",
-                duration: 1
-            }, 0)
-            .to(layer1, {
-                clipPath: "circle(100vmax at 50% 50%)",
-                webkitClipPath: "circle(100vmax at 50% 50%)",
-                ease: "power1.inOut",
-                duration: 4,
-                onUpdate: function() {
-                    const prog = this.progress();
-                    if (prog < 0.5) setActiveIndicator(0);
-                    else setActiveIndicator(1);
-                }
-            }, 0)
-            // Linger on Photo 2
-            .to({}, { duration: 1.5 })
-
-            // --- Step 2: Photo 3 expands slowly from center circle over Photo 2 ---
-            .fromTo(layer2, 
-                { clipPath: "circle(0px at 50% 50%)", webkitClipPath: "circle(0px at 50% 50%)" },
-                {
-                    clipPath: "circle(100vmax at 50% 50%)",
-                    webkitClipPath: "circle(100vmax at 50% 50%)",
-                    ease: "power1.inOut",
-                    duration: 4,
-                    onUpdate: function() {
-                        const prog = this.progress();
-                        if (prog > 0.1) setActiveIndicator(2);
-                    }
-                }
-            )
-            // Linger on Photo 3
-            .to({}, { duration: 1.5 })
-
-            // --- Step 3: Photo 4 expands slowly from center circle over Photo 3 ---
-            .fromTo(layer3,
-                { clipPath: "circle(0px at 50% 50%)", webkitClipPath: "circle(0px at 50% 50%)" },
-                {
-                    clipPath: "circle(100vmax at 50% 50%)",
-                    webkitClipPath: "circle(100vmax at 50% 50%)",
-                    ease: "power1.inOut",
-                    duration: 4,
-                    onUpdate: function() {
-                        const prog = this.progress();
-                        if (prog > 0.1) setActiveIndicator(3);
-                    }
-                }
-            )
-            // Linger on Photo 4
-            .to({}, { duration: 1.2 })
-
-            // --- Step 4: Final Overlay Content Reveal ---
-            .to(maskContent, {
-                opacity: 1,
-                y: 0,
-                ease: "power2.out",
-                duration: 2
-            });
 
         // 3. Video Modal Playback System
         const videoModal = document.getElementById('videoModal');
@@ -275,7 +346,7 @@
                 if (videoSrc) {
                     videoIframe.src = videoSrc;
                     videoModal.classList.add('active');
-                    lenis.stop(); // Stop scroll when modal is open
+                    if (lenis) lenis.stop();
                 }
             });
         });
@@ -283,7 +354,7 @@
         function closeModal() {
             videoModal.classList.remove('active');
             videoIframe.src = '';
-            lenis.start(); // Resume scroll
+            if (lenis) lenis.start();
         }
 
         modalCloseBtn.addEventListener('click', closeModal);

@@ -177,12 +177,25 @@
     transition: var(--transition-smooth);
 }
 
-.photo-grid-card:hover .photo-grid-overlay {
+.photo-grid-card.touch-active .photo-grid-overlay,
+.photo-grid-card:focus-within .photo-grid-overlay {
     opacity: 1;
     transform: translateY(0);
 }
 
-.photo-badge-cat {
+.photo-grid-card.touch-active .photo-grid-desc,
+.photo-grid-card:focus-within .photo-grid-desc {
+    opacity: 0.95;
+    transform: translateY(0);
+    max-height: 80px;
+    margin-top: 0.4rem;
+}
+
+.photo-grid-card.touch-active .photo-view-icon,
+.photo-grid-card:focus-within .photo-view-icon {
+    opacity: 1;
+    transform: scale(1);
+}
     font-size: 0.68rem;
     letter-spacing: 3.5px;
     text-transform: uppercase;
