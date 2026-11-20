@@ -1,0 +1,348 @@
+/* ----------------------------------------------------
+   AAKAR FILMS - FULL SCREEN CINEMATIC CURTAIN REVEAL
+   Edge-to-edge 100vw x 100vh viewport experience
+---------------------------------------------------- */
+.section-curtain-reveal {
+    position: relative;
+    width: 100vw;
+    max-width: 100%;
+    min-height: 100vh;
+    height: 100vh;
+    height: 100svh;
+    background-color: #0b0202;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid rgba(185, 154, 133, 0.25);
+    border-bottom: 1px solid rgba(185, 154, 133, 0.25);
+    padding: 0;
+    margin: 0;
+}
+
+.curtain-pinned-stage {
+    position: relative;
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    perspective: 1600px;
+}
+
+/* ----------------------------------------------------
+   1. FULLSCREEN BLURRED BACKGROUND ATMOSPHERE LAYER
+---------------------------------------------------- */
+.curtain-bg-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.curtain-bg-blur {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: blur(32px) brightness(0.38) contrast(1.15) saturate(1.2);
+    transform: scale(1.18);
+    will-change: filter, transform;
+}
+
+.curtain-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at 50% 45%,
+        rgba(40, 10, 10, 0.35) 0%,
+        rgba(15, 3, 3, 0.75) 60%,
+        rgba(5, 1, 1, 0.95) 100%
+    );
+    mix-blend-mode: multiply;
+}
+
+/* ----------------------------------------------------
+   2. CENTERED SHARP FOREGROUND WEDDING PHOTOGRAPH
+---------------------------------------------------- */
+.curtain-fg-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.curtain-photo-container {
+    position: relative;
+    max-height: 82vh;
+    max-width: min(88vw, 760px);
+    aspect-ratio: 854 / 960;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #0c0303;
+    border: 1px solid rgba(185, 154, 133, 0.38);
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.95),
+        0 10px 40px rgba(0, 0, 0, 0.8),
+        0 0 50px rgba(185, 154, 133, 0.18);
+    transform-style: preserve-3d;
+}
+
+.curtain-revealed-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    filter: brightness(0.95) contrast(1.05);
+    transform: scale(1.04);
+    will-change: transform, filter;
+    transition: transform 0.6s ease;
+}
+
+/* Cinematic Spotlight reflection across the photograph */
+.curtain-light-beam {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 25%, rgba(207, 168, 120, 0.15) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 6;
+}
+
+/* ----------------------------------------------------
+   3. FULLSCREEN REALISTIC VELVET CURTAIN PANELS (100vw)
+---------------------------------------------------- */
+.curtain-panels-container {
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+    height: 100svh;
+    z-index: 20;
+    pointer-events: none;
+    display: flex;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+.curtain-panel {
+    position: absolute;
+    top: 0;
+    width: 51vw;
+    height: 100vh;
+    height: 100svh;
+    will-change: transform, filter;
+    transform-style: preserve-3d;
+}
+
+/* Left Velvet Curtain Panel */
+.curtain-left {
+    left: 0;
+    transform-origin: left center;
+    background: repeating-linear-gradient(
+        90deg,
+        #1a0303 0px,
+        #2d0707 35px,
+        #4c1010 70px,
+        #2d0707 105px,
+        #1a0303 140px
+    );
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.92);
+}
+
+/* Right Velvet Curtain Panel */
+.curtain-right {
+    right: 0;
+    transform-origin: right center;
+    background: repeating-linear-gradient(
+        90deg,
+        #1a0303 0px,
+        #2d0707 35px,
+        #4c1010 70px,
+        #2d0707 105px,
+        #1a0303 140px
+    );
+    box-shadow: -20px 0 50px rgba(0, 0, 0, 0.92);
+}
+
+/* Velvet Texture, Light Shimmer & Fabric Folds */
+.curtain-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(207, 168, 120, 0.08) 25%, transparent 65%, rgba(0, 0, 0, 0.75) 100%),
+        repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.45) 0px,
+            transparent 35px,
+            rgba(255, 255, 255, 0.12) 70px,
+            transparent 105px,
+            rgba(0, 0, 0, 0.45) 140px
+        );
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+/* Royal Gold Fringe & Decorative Hem at the Bottom of Curtains */
+.curtain-panel::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 18px;
+    background: repeating-linear-gradient(
+        90deg,
+        #b99a85 0px,
+        #e5c59f 6px,
+        #75553d 12px
+    );
+    box-shadow: 0 -4px 14px rgba(207, 168, 120, 0.45);
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Center Seam Deep Shadow When Curtains Are Closed */
+.curtain-center-shadow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 100vh;
+    height: 100svh;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.85) 0%, transparent 80%);
+    z-index: 22;
+    pointer-events: none;
+}
+
+/* ----------------------------------------------------
+   4. SCROLL PROMPT & BOTTOM REVEALED TYPOGRAPHY
+---------------------------------------------------- */
+.curtain-prompt {
+    position: absolute;
+    bottom: 3.5rem;
+    z-index: 25;
+    text-align: center;
+    pointer-events: none;
+    color: var(--accent-light);
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+    transition: opacity 0.5s ease;
+}
+
+.curtain-prompt-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--accent-gold);
+    animation: curtainPromptBounce 2s infinite ease-in-out;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8));
+}
+
+@keyframes curtainPromptBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+}
+
+/* Elegant Text Revealed Near Bottom (Non-Obtrusive to Faces) */
+.curtain-text-overlay {
+    position: absolute;
+    bottom: 2.2rem;
+    z-index: 15;
+    text-align: center;
+    max-width: 800px;
+    padding: 0.8rem 1.8rem;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(22px);
+    will-change: transform, opacity;
+    background: radial-gradient(ellipse at center, rgba(10, 2, 2, 0.7) 0%, transparent 80%);
+    border-radius: 20px;
+}
+
+.curtain-text-overlay .section-subhead {
+    font-size: 0.72rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    display: inline-block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.curtain-text-overlay .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+    color: #FFFFFF;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95);
+}
+
+.curtain-text-overlay .curtain-desc {
+    font-size: 0.86rem;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    line-height: 1.6;
+    text-transform: uppercase;
+    max-width: 600px;
+    margin: 0 auto;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* ----------------------------------------------------
+   RESPONSIVE ADJUSTMENTS
+---------------------------------------------------- */
+@media (max-width: 768px) {
+    .curtain-photo-container {
+        max-height: 72vh;
+        max-width: 92vw;
+    }
+    .curtain-prompt {
+        bottom: 2.5rem;
+    }
+    .curtain-text-overlay {
+        bottom: 1.5rem;
+        padding: 0.5rem 1rem;
+    }
+    .curtain-text-overlay .section-title {
+        font-size: 1.5rem;
+    }
+    .curtain-text-overlay .curtain-desc {
+        font-size: 0.75rem;
+        letter-spacing: 1.2px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .curtain-panel,
+    .curtain-revealed-img,
+    .curtain-text-overlay {
+        transition: none !important;
+        transform: none !important;
+    }
+}

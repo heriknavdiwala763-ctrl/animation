@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/cursor.css">
     <link rel="stylesheet" href="css/split-text.css">
     <link rel="stylesheet" href="css/stacked-cards.css">
+    <link rel="stylesheet" href="css/curtain-reveal.css">
 </head>
 
 <body>
@@ -98,7 +99,7 @@
                 <span class="section-subhead">Our Art &amp; Philosophy</span>
                 <h2 class="section-title">EVERY LOVE STORY DESERVES TO BE <em>REMEMBERED</em></h2>
                 <p class="about-body">
-                    At AAKAR FILMS, we believe weddings are not just ceremonies of ritualsÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Âthey are living symphonies
+                    At AAKAR FILMS, we believe weddings are not just ceremonies of ritualsÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âthey are living symphonies
                     of unspoken glances, joyous tears, and timeless heritage. We approach wedding documentation with the
                     delicate finesse of fine art and the visual power of modern cinema.
                 </p>
@@ -508,6 +509,53 @@
     </section>
 
     <!-- ----------------------------------------------------
+         SECTION 4C: FULL SCREEN CINEMATIC CURTAIN REVEAL
+    ---------------------------------------------------- -->
+    <section class="section-curtain-reveal" id="curtainRevealSection">
+        <div class="curtain-pinned-stage">
+            <!-- Fullscreen Blurred Background Layer -->
+            <div class="curtain-bg-wrapper">
+                <img src="assets/images/curtain-wedding-couple.jpg" alt="" class="curtain-bg-blur" aria-hidden="true">
+                <div class="curtain-bg-overlay"></div>
+            </div>
+
+            <!-- Centered Sharp Foreground Wedding Photograph -->
+            <div class="curtain-fg-wrapper">
+                <div class="curtain-photo-container">
+                    <img src="assets/images/curtain-wedding-couple.jpg"
+                        alt="Royal Wedding Couple Portrait - Aakar Films" class="curtain-revealed-img" id="curtainRevealedImg">
+                    <div class="curtain-light-beam"></div>
+                </div>
+            </div>
+
+            <!-- Full-Screen Two-Panel Velvet Stage Curtains -->
+            <div class="curtain-panels-container">
+                <div class="curtain-panel curtain-left" id="curtainLeft"></div>
+                <div class="curtain-panel curtain-right" id="curtainRight"></div>
+                <div class="curtain-center-shadow" id="curtainCenterShadow"></div>
+            </div>
+
+            <!-- Scroll Guidance Prompt -->
+            <div class="curtain-prompt" id="curtainPrompt">
+                <svg class="curtain-prompt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <polyline points="7 13 12 18 17 13"></polyline>
+                    <polyline points="7 6 12 11 17 6"></polyline>
+                </svg>
+                <span>Scroll to Unveil</span>
+            </div>
+
+            <!-- Elegant Revealed Typography Floating at Bottom (Faces stay completely clear) -->
+            <div class="curtain-text-overlay" id="curtainTextOverlay">
+                <span class="section-subhead">A MOMENT TO REMEMBER</span>
+                <h2 class="section-title">BEHIND EVERY FRAME</h2>
+                <p class="curtain-desc">
+                    Every love story deserves to be remembered.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ----------------------------------------------------
          SECTION 5: OUR FILMS (CINEMATOGRAPHY)
     ---------------------------------------------------- -->
     <section class="section-films" id="films">
@@ -752,6 +800,8 @@
     <script src="js/cursor-trail.js"></script>
     <script src="js/split-text.js"></script>
     <script src="js/stacked-cards.js"></script>
+    <script src="js/perspective-gallery.js"></script>
+    <script src="js/curtain-reveal.js"></script>
 </body>
 
 </html>
