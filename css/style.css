@@ -1312,6 +1312,39 @@
                 padding: 1rem 2rem;
             }
 
+            /* ----------------------------------------------------
+               MOBILE THREE-COLUMN REVERSE SCROLL ADAPTATION
+            ---------------------------------------------------- */
+            .reverse-parallax-wrapper {
+                height: auto;
+                min-height: 80vh;
+                overflow: visible;
+                padding: 2.5rem 0;
+            }
+
+            .reverse-columns-track {
+                grid-template-columns: 1fr;
+                gap: 1.8rem;
+                width: 90vw;
+                height: auto;
+            }
+
+            .parallax-col {
+                gap: 1.8rem;
+            }
+
+            .card-tall {
+                height: 50vh;
+            }
+
+            .card-medium {
+                height: 42vh;
+            }
+
+            .card-square {
+                height: 35vh;
+            }
+
             .nav-toggle {
                 display: flex;
             }

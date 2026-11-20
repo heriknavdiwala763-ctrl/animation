@@ -5,6 +5,7 @@
  * - Click-and-drag and touch-drag rotation
  * - GSAP ScrollTrigger entrance reveal & subtle scroll-linked rotation
  * - Quick Face Navigation Buttons
+ * - Fully optimized for both desktop and mobile touch devices
  * - Respects prefers-reduced-motion
  */
 (function init3DPhotoCubeGallery() {
@@ -30,7 +31,7 @@
     let isUserDragging = false;
     let isHovering = false;
 
-    // Mouse drag coordinates
+    // Mouse/Touch drag coordinates
     let dragStartX = 0;
     let dragStartY = 0;
     let startRotX = 0;
@@ -79,10 +80,10 @@
 
         // Header animation
         gsap.from(".cube-header > *", {
-            y: 35,
+            y: 30,
             opacity: 0,
             duration: 1,
-            stagger: 0.15,
+            stagger: 0.12,
             ease: "power2.out",
             scrollTrigger: {
                 trigger: section,
@@ -97,28 +98,27 @@
             end: "bottom top",
             onUpdate: (self) => {
                 if (!isUserDragging) {
-                    targetRotY += self.getVelocity() * 0.002;
+                    targetRotY += self.getVelocity() * 0.0018;
                 }
             }
         });
     }
 
     // ----------------------------------------------------
-    // MOUSE MOVE PARALLAX (Subtle tilt inside viewport)
+    // MOUSE MOVE PARALLAX (Desktop only, ignored on touch)
     // ----------------------------------------------------
     section.addEventListener("mousemove", (e) => {
         if (isUserDragging || reducedMotion) return;
+        if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) return;
         isHovering = true;
 
         const rect = section.getBoundingClientRect();
-        const normX = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+        const normX = (e.clientX - rect.left) / rect.width - 0.5;
         const normY = (e.clientY - rect.top) / rect.height - 0.5;
 
-        // Subtle interactive offset to current target
         targetRotY += normX * 0.4;
         targetRotX -= normY * 0.3;
 
-        // Clamp vertical rotation to avoid tumbling upside-down uncontrollably
         targetRotX = Math.max(-85, Math.min(85, targetRotX));
     });
 
@@ -144,12 +144,10 @@
         const deltaX = clientX - dragStartX;
         const deltaY = clientY - dragStartY;
 
-        // Sensitivity factor
         const sensitivity = 0.45;
         targetRotY = startRotY + deltaX * sensitivity;
         targetRotX = startRotX - deltaY * sensitivity;
 
-        // Clamp X tilt
         targetRotX = Math.max(-85, Math.min(85, targetRotX));
     }
 
@@ -158,7 +156,6 @@
         isUserDragging = false;
         hitArea.classList.remove("is-dragging");
 
-        // Resume auto-rotation smoothly after 2 seconds of inactivity
         clearTimeout(resumeTimeout);
         resumeTimeout = setTimeout(() => {
             if (!isUserDragging) isAutoRotating = true;
@@ -183,20 +180,45 @@
         onDragEnd();
     });
 
-    // Touch events for mobile/tablet
+    // Touch events for mobile/tablet with vertical scroll bypass
+    let touchStartScrollY = 0;
+    let isHorizontalGesture = false;
+
     hitArea.addEventListener("touchstart", (e) => {
         if (e.touches.length === 1) {
-            onDragStart(e.touches[0].clientX, e.touches[0].clientY);
+            const touch = e.touches[0];
+            dragStartX = touch.clientX;
+            dragStartY = touch.clientY;
+            touchStartScrollY = window.scrollY;
+            isHorizontalGesture = false;
+            startRotX = targetRotX;
+            startRotY = targetRotY;
         }
     }, { passive: true });
 
-    window.addEventListener("touchmove", (e) => {
-        if (isUserDragging && e.touches.length === 1) {
-            onDragMove(e.touches[0].clientX, e.touches[0].clientY);
+    hitArea.addEventListener("touchmove", (e) => {
+        if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            const diffX = Math.abs(touch.clientX - dragStartX);
+            const diffY = Math.abs(touch.clientY - dragStartY);
+
+            // If user is predominantly dragging sideways over the cube, rotate cube and prevent page jank
+            if (diffX > diffY && diffX > 10) {
+                isHorizontalGesture = true;
+                isUserDragging = true;
+                isAutoRotating = false;
+                onDragMove(touch.clientX, touch.clientY);
+            } else if (diffY > diffX && !isHorizontalGesture) {
+                // If user is scrolling page vertically, do not lock page scroll
+                isUserDragging = false;
+            } else if (isHorizontalGesture) {
+                onDragMove(touch.clientX, touch.clientY);
+            }
         }
     }, { passive: true });
 
-    window.addEventListener("touchend", () => {
+    hitArea.addEventListener("touchend", () => {
+        isHorizontalGesture = false;
         onDragEnd();
     });
 
@@ -210,10 +232,7 @@
                 isAutoRotating = false;
                 const target = faceOrientations[faceKey];
 
-                // Smoothly interpolate to target face angle
                 targetRotX = target.x;
-                
-                // Choose shortest rotation to target angle
                 const diff = (target.y - (targetRotY % 360) + 540) % 360 - 180;
                 targetRotY = targetRotY + diff;
 
@@ -234,11 +253,9 @@
         if (!reducedMotion) {
             if (isAutoRotating && !isUserDragging) {
                 targetRotY += autoSpeedY;
-                // Gentle floating wave on X
                 targetRotX = -12 + Math.sin(Date.now() * 0.0008) * 8;
             }
 
-            // Smooth damping / interpolation (Lerp)
             currentRotX += (targetRotX - currentRotX) * 0.08;
             currentRotY += (targetRotY - currentRotY) * 0.08;
 

@@ -2,9 +2,9 @@
  * AAKAR FILMS - Premium GSAP Split Text Reveal Animation System
  * Splits headings into words and characters with multi-directional cinematic reveals
  * Fully synchronized with Lenis Smooth Scroll and GSAP ScrollTrigger
+ * Responsive on desktop, tablet, and mobile devices
  */
 (function initGSAPSplitText() {
-    // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
@@ -13,10 +13,6 @@
         return;
     }
 
-    /**
-     * Splits an element's text content into individual character spans wrapped in overflow-hidden containers.
-     * Preserves nested inline tags (e.g. <em>) and whitespace.
-     */
     function splitIntoChars(element) {
         if (!element || element.dataset.splitDone) return [];
         element.dataset.splitDone = "true";
@@ -50,16 +46,12 @@
 
         const fragment = document.createDocumentFragment();
         Array.from(element.childNodes).forEach((child) => traverse(child, fragment));
-        element.innerHTML = "";
+        element.textContent = "";
         element.appendChild(fragment);
 
         return charsArray;
     }
 
-    /**
-     * Splits an element's text content into individual words wrapped in overflow-hidden containers.
-     * Preserves nested inline tags (e.g. <em>) and natural whitespace.
-     */
     function splitIntoWords(element) {
         if (!element || element.dataset.splitDone) return [];
         element.dataset.splitDone = "true";
@@ -68,24 +60,22 @@
 
         function traverse(node, targetContainer) {
             if (node.nodeType === Node.TEXT_NODE) {
-                const text = node.textContent;
-                // Split by spaces while preserving tokens
-                const tokens = text.split(/(\s+)/);
-                tokens.forEach((token) => {
-                    if (/^\s+$/.test(token)) {
-                        targetContainer.appendChild(document.createTextNode(token));
-                        return;
-                    }
-                    if (!token) return;
-
+                const text = node.textContent.trim();
+                if (!text) return;
+                const words = text.split(/\s+/);
+                words.forEach((w, idx) => {
                     const wrapper = document.createElement("span");
                     wrapper.className = "split-word-wrapper";
                     const inner = document.createElement("span");
                     inner.className = "split-word";
-                    inner.textContent = token;
+                    inner.textContent = w;
                     wrapper.appendChild(inner);
                     targetContainer.appendChild(wrapper);
                     wordsArray.push(inner);
+
+                    if (idx < words.length - 1) {
+                        targetContainer.appendChild(document.createTextNode(" "));
+                    }
                 });
             } else if (node.nodeType === Node.ELEMENT_NODE) {
                 const clone = node.cloneNode(false);
@@ -96,21 +86,18 @@
 
         const fragment = document.createDocumentFragment();
         Array.from(element.childNodes).forEach((child) => traverse(child, fragment));
-        element.innerHTML = "";
+        element.textContent = "";
         element.appendChild(fragment);
 
         return wordsArray;
     }
 
-    // Responsive distance calculation (smaller on mobile screens)
     const isMobile = window.innerWidth <= 768;
-    const vDistance = isMobile ? 32 : 55;
-    const hDistance = isMobile ? 25 : 45;
+    const vDistance = isMobile ? 26 : 55;
+    const hDistance = isMobile ? 20 : 45;
 
     /* ----------------------------------------------------
-       1. HERO SECTION:
-          - Heading "AAKAR FILMS": Letter-by-letter multi-directional reveal
-          - Tagline "WE CAPTURE EMOTIONS, NOT JUST MOMENTS": Subtle word-by-word reveal
+       1. HERO SECTION
     ---------------------------------------------------- */
     const heroHeading = document.querySelector(".hero-main-brand");
     const heroTagline = document.querySelector(".hero-tagline");
@@ -118,7 +105,6 @@
     if (heroHeading) {
         const heroChars = splitIntoChars(heroHeading);
         if (heroChars.length > 0) {
-            // Alternating entrance: even letters from top, odd letters from bottom
             heroChars.forEach((char, i) => {
                 const fromY = i % 2 === 0 ? -vDistance : vDistance;
                 gsap.set(char, {
@@ -128,7 +114,6 @@
                 });
             });
 
-            // Trigger animation on page load with slight delay for high impact
             gsap.to(heroChars, {
                 y: 0,
                 opacity: 1,
@@ -161,32 +146,18 @@
     }
 
     /* ----------------------------------------------------
-       2. ABOUT SECTION:
-          - Heading "EVERY LOVE STORY DESERVES TO BE REMEMBERED"
-          - Directional Word-by-word reveal:
-            * 1st word: enters from left (-X)
-            * 2nd word: enters from bottom (+Y)
-            * 3rd word: enters from right (+X)
-            * 4th word: enters from bottom (+Y)
-            * Remaining: sequential bottom (+Y)
+       2. ABOUT SECTION
     ---------------------------------------------------- */
     const aboutHeading = document.querySelector("#about .section-title");
     if (aboutHeading) {
         const aboutWords = splitIntoWords(aboutHeading);
         if (aboutWords.length > 0) {
             aboutWords.forEach((word, i) => {
-                let initX = 0;
-                let initY = 0;
-
-                if (i === 0) {
-                    initX = -hDistance; // 1st word: from left
-                } else if (i === 1) {
-                    initY = vDistance;  // 2nd word: from bottom
-                } else if (i === 2) {
-                    initX = hDistance;  // 3rd word: from right
-                } else {
-                    initY = vDistance;  // 4th & remaining words: from bottom
-                }
+                const dir = i % 3;
+                let initX = 0, initY = 0;
+                if (dir === 0) initY = -vDistance;
+                else if (dir === 1) initY = vDistance;
+                else initX = -hDistance;
 
                 gsap.set(word, {
                     x: initX,
@@ -198,7 +169,7 @@
 
             ScrollTrigger.create({
                 trigger: aboutHeading,
-                start: "top 86%",
+                start: isMobile ? "top 92%" : "top 86%",
                 once: true,
                 onEnter: () => {
                     gsap.to(aboutWords, {
@@ -215,9 +186,7 @@
     }
 
     /* ----------------------------------------------------
-       3. WEDDINGS SECTION:
-          - Heading "OUR WEDDING STORIES"
-          - Staggered word-by-word reveal
+       3. WEDDINGS SECTION
     ---------------------------------------------------- */
     const weddingsHeading = document.querySelector("#weddings .section-title");
     if (weddingsHeading) {
@@ -234,7 +203,7 @@
 
             ScrollTrigger.create({
                 trigger: weddingsHeading,
-                start: "top 85%",
+                start: isMobile ? "top 92%" : "top 85%",
                 once: true,
                 onEnter: () => {
                     gsap.to(weddingWords, {
@@ -250,26 +219,23 @@
     }
 
     /* ----------------------------------------------------
-       4. CINEMATIC MOMENTS SECTION (Circular Mask Overlay):
-          - Heading "MOMENTS THAT LAST FOREVER"
-          - Combination of vertical and horizontal word reveals
+       4. CINEMATIC MOMENTS SECTION (Circular Mask Overlay)
     ---------------------------------------------------- */
     const maskHeading = document.querySelector("#maskContent h2");
     if (maskHeading) {
         const maskWords = splitIntoWords(maskHeading);
         if (maskWords.length > 0) {
             maskWords.forEach((word, i) => {
-                // Alternating horizontal and vertical entrances
-                let fromX = 0;
-                let fromY = 0;
-                if (i === 0) fromX = -hDistance;
-                else if (i === 1) fromY = vDistance;
-                else if (i === 2) fromX = hDistance;
-                else fromY = vDistance;
+                const dir = i % 4;
+                let initX = 0, initY = 0;
+                if (dir === 0) initY = -vDistance;
+                else if (dir === 1) initY = vDistance;
+                else if (dir === 2) initX = -hDistance;
+                else initX = hDistance;
 
                 gsap.set(word, {
-                    x: fromX,
-                    y: fromY,
+                    x: initX,
+                    y: initY,
                     opacity: 0,
                     force3D: true
                 });
@@ -277,12 +243,45 @@
 
             ScrollTrigger.create({
                 trigger: "#maskRevealSection",
-                start: "top 50%",
+                start: isMobile ? "top 60%" : "top 30%",
                 once: true,
                 onEnter: () => {
                     gsap.to(maskWords, {
                         x: 0,
                         y: 0,
+                        opacity: 1,
+                        duration: 1.2,
+                        stagger: 0.08,
+                        ease: "power3.out"
+                    });
+                }
+            });
+        }
+    }
+
+    /* ----------------------------------------------------
+       5. CINEMATOGRAPHY (FILMS) SECTION
+    ---------------------------------------------------- */
+    const filmsHeading = document.querySelector("#films .section-title");
+    if (filmsHeading) {
+        const filmWords = splitIntoWords(filmsHeading);
+        if (filmWords.length > 0) {
+            filmWords.forEach((word, i) => {
+                const dirX = i % 2 === 0 ? -hDistance : hDistance;
+                gsap.set(word, {
+                    x: dirX,
+                    opacity: 0,
+                    force3D: true
+                });
+            });
+
+            ScrollTrigger.create({
+                trigger: filmsHeading,
+                start: isMobile ? "top 92%" : "top 85%",
+                once: true,
+                onEnter: () => {
+                    gsap.to(filmWords, {
+                        x: 0,
                         opacity: 1,
                         duration: 1.1,
                         stagger: 0.08,
@@ -294,52 +293,16 @@
     }
 
     /* ----------------------------------------------------
-       5. OUR FILMS SECTION:
-          - Heading "LOVE STORIES IN MOTION"
-          - Elegant letter-by-letter reveal
+       6. CONTACT SECTION
     ---------------------------------------------------- */
-    const filmsHeading = document.querySelector("#films .section-title");
-    if (filmsHeading) {
-        const filmChars = splitIntoChars(filmsHeading);
-        if (filmChars.length > 0) {
-            filmChars.forEach((char, i) => {
-                const charY = i % 2 === 0 ? -vDistance * 0.9 : vDistance * 0.9;
-                gsap.set(char, {
-                    y: charY,
-                    opacity: 0,
-                    force3D: true
-                });
-            });
-
-            ScrollTrigger.create({
-                trigger: filmsHeading,
-                start: "top 85%",
-                once: true,
-                onEnter: () => {
-                    gsap.to(filmChars, {
-                        y: 0,
-                        opacity: 1,
-                        duration: 1,
-                        stagger: 0.04,
-                        ease: "power4.out"
-                    });
-                }
-            });
-        }
-    }
-
-    /* ----------------------------------------------------
-       6. CONTACT SECTION:
-          - Heading "LET'S CREATE SOMETHING BEAUTIFUL"
-          - Word-by-word reveal
-    ---------------------------------------------------- */
-    const contactHeading = document.querySelector("#contact .contact-left h2");
+    const contactHeading = document.querySelector("#contact .section-title");
     if (contactHeading) {
         const contactWords = splitIntoWords(contactHeading);
         if (contactWords.length > 0) {
-            contactWords.forEach((word) => {
+            contactWords.forEach((word, i) => {
+                const fromY = i % 2 === 0 ? vDistance : -vDistance;
                 gsap.set(word, {
-                    y: vDistance,
+                    y: fromY,
                     opacity: 0,
                     force3D: true
                 });
@@ -347,7 +310,7 @@
 
             ScrollTrigger.create({
                 trigger: contactHeading,
-                start: "top 88%",
+                start: isMobile ? "top 92%" : "top 85%",
                 once: true,
                 onEnter: () => {
                     gsap.to(contactWords, {
@@ -363,8 +326,7 @@
     }
 
     /* ----------------------------------------------------
-       7. BONUS EDITORIAL ENHANCEMENT:
-          - Section Subheadings & Photography Collections Heading
+       7. PHOTOGRAPHY CATEGORY GALLERY SECTION
     ---------------------------------------------------- */
     const catGalleryHeading = document.querySelector("#gallerySection .section-title");
     if (catGalleryHeading) {
@@ -380,7 +342,7 @@
 
             ScrollTrigger.create({
                 trigger: catGalleryHeading,
-                start: "top 85%",
+                start: isMobile ? "top 92%" : "top 85%",
                 once: true,
                 onEnter: () => {
                     gsap.to(catWords, {
@@ -395,7 +357,6 @@
         }
     }
 
-    // Refresh ScrollTrigger once text splitting is finalized to keep all page offsets perfectly intact
     setTimeout(() => {
         ScrollTrigger.refresh();
     }, 150);

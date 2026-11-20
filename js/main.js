@@ -17,7 +17,14 @@
         // Register GSAP plugins
         gsap.registerPlugin(ScrollTrigger);
 
+        // Configure ScrollTrigger for optimal mobile & touch performance
+        ScrollTrigger.config({
+            limitCallbacks: true,
+            ignoreMobileResize: true // Prevents harsh jumps on mobile browser address bar collapse
+        });
+
         // 1. Initialize Lenis Smooth Scroll (Lightweight & responsive)
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         const lenis = new Lenis({
             duration: 0.9,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -25,7 +32,7 @@
             smooth: true,
             mouseMultiplier: 1.1,
             smoothTouch: false,
-            touchMultiplier: 1.5
+            touchMultiplier: 1.2
         });
 
         // Sync Lenis with GSAP ScrollTrigger
@@ -97,7 +104,7 @@
         const colRight = document.getElementById('galleryColRight');
 
         ScrollTrigger.matchMedia({
-            // Desktop & Tablet
+            // Desktop & Large Tablet
             "(min-width: 769px)": function () {
                 gsap.set(colLeft, { y: 60, force3D: true });
                 gsap.set(colCenter, { y: -620, force3D: true }); // Buffered high so top never empties
@@ -130,11 +137,35 @@
                         force3D: true,
                         ease: "none"
                     }, 0);
+
+                return () => {
+                    galleryTimeline.kill();
+                };
             },
 
-            // Mobile Adaptive View
+            // Mobile Adaptive View: Elegant vertical staggered parallax on touch scroll
             "(max-width: 768px)": function () {
                 gsap.set([colLeft, colCenter, colRight], { clearProps: "all" });
+
+                // Gentle mobile parallax on columns as user scrolls down
+                const mobileTimeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: gallerySection,
+                        start: "top 90%",
+                        end: "bottom 10%",
+                        scrub: 1
+                    }
+                });
+
+                mobileTimeline
+                    .to(colLeft, { y: -40, ease: "none" }, 0)
+                    .to(colCenter, { y: 30, ease: "none" }, 0)
+                    .to(colRight, { y: -40, ease: "none" }, 0);
+
+                return () => {
+                    mobileTimeline.kill();
+                    gsap.set([colLeft, colCenter, colRight], { clearProps: "all" });
+                };
             }
         });
 
@@ -279,6 +310,19 @@
                 }, 6000);
             });
         }
+
+        // 5. Global ScrollTrigger Refresh & Orientation Change Handling
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 300);
+        });
+
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 400);
+        });
 
 
 
