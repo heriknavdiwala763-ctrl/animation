@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAKAR FILMS | Luxury Wedding Photography & Cinematography</title>
+
+    <!-- Google Fonts: Cormorant Garamond, Playfair Display, Montserrat & Signature Script Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/cursor.css">
+    <link rel="stylesheet" href="css/split-text.css">
+    <link rel="stylesheet" href="css/stacked-cards.css">
+</head>
+
+<body>
+
+    <!-- ----------------------------------------------------
+         SMOOTH TRAIL CURSOR CANVAS & DOT
+    ---------------------------------------------------- -->
+    <canvas id="cursorTrailCanvas" class="cursor-trail-canvas"></canvas>
+    <div id="cursorFollowerDot" class="cursor-follower-dot"></div>
+
+    <!-- ----------------------------------------------------
+         NAVIGATION BAR
+    ---------------------------------------------------- -->
+    <header class="site-navbar" id="navbar">
+        <a href="#home" class="brand-logo-container" aria-label="AAKAR FILMS Home">
+            <img src="calligraphy_icon_tight.png" alt="Aakar" class="brand-icon-img">
+            <div class="brand-text-wrap">
+                <span class="brand-title-text">AAKAR FILMS</span>
+                <span class="logo-subtext">Luxury Weddings</span>
+            </div>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" class="active">HOME</a></li>
+            <li><a href="#about">ABOUT US</a></li>
+            <li><a href="#weddings">WEDDINGS</a></li>
+            <li><a href="#gallerySection">GALLERY</a></li>
+            <li><a href="#films">OUR FILMS</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- ----------------------------------------------------
+         SECTION 1: HERO (CINEMATOGRAPHY VIDEO BACKGROUND)
+    ---------------------------------------------------- -->
+    <section class="hero-section" id="home">
+        <!-- Cinematic Fullscreen Wedding Video Background with Poster Fallback -->
+        <div class="hero-video-container">
+            <video class="hero-bg-video" id="heroBgVideo" autoplay muted loop playsinline preload="auto"
+                poster="assets/videos/hero-poster.jpg" aria-hidden="true">
+                <source src="assets/videos/hero-wedding.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Luxury Dark Burgundy Overlay -->
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <h1 class="hero-main-brand">AAKAR FILMS</h1>
+            <p class="hero-tagline">WE CAPTURE EMOTIONS, NOT JUST MOMENTS</p>
+            <p class="hero-subtext">Wedding Photography &amp; Cinematography</p>
+            <a href="#weddings" class="btn-luxury">
+                <span>EXPLORE OUR STORIES</span>
+                &rarr;
+            </a>
+        </div>
+    </section>
+
+    <!-- ----------------------------------------------------
+         SECTION 2: ABOUT AAKAR
+    ---------------------------------------------------- -->
+    <section class="section-about" id="about">
+        <div class="about-grid">
+            <div class="about-text-col">
+                <span class="section-subhead">Our Art &amp; Philosophy</span>
+                <h2 class="section-title">EVERY LOVE STORY DESERVES TO BE <em>REMEMBERED</em></h2>
+                <p class="about-body">
+                    At AAKAR FILMS, we believe weddings are not just ceremonies of ritualsÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Âthey are living symphonies
+                    of unspoken glances, joyous tears, and timeless heritage. We approach wedding documentation with the
+                    delicate finesse of fine art and the visual power of modern cinema.
+                </p>
+                <p class="about-body">
+                    From royal Gujarati wedding traditions, opulent palace celebrations, to intimate seaside vows, our
+                    team weaves unobtrusive candid storytelling with breathtaking portraits that age like vintage wine.
+                </p>
+
+                <div class="about-signature">
+                    <div class="badge">AAKAR</div>
+                    <div>
+                        <p><strong>CRAFTED WITH SOUL</strong></p>
+                        <p>Destination Wedding Specialists</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-visual-col">
+                <div class="about-img-frame">
+                    <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1000&auto=format&fit=crop"
+                        alt="Indian Royal Bride Portrait by Aakar Films">
+                </div>
+                <div class="about-floating-card">
+                    <h4>12+</h4>
+                    <p>Years of Regal Storytelling Across India &amp; Worldwide</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ----------------------------------------------------
+         SECTION 3: THREE-COLUMN REVERSE SCROLL GALLERY
+    ---------------------------------------------------- -->
+    <section class="section-gallery" id="weddings">
+        <div class="gallery-header">
+            <span class="section-subhead">Selected Portfolios</span>
+            <h2 class="section-title">OUR WEDDING STORIES</h2>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 1rem;">
+                Experience our signature three-column reverse kinetic archive. As you scroll, witness the interplay of
+                memories flowing in opposite trajectories.
+            </p>
+
+            <ul class="filter-tags">
+                <li>Traditional Wedding</li>
+                <li>Pre-Wedding</li>
+                <li>Candid Photography</li>
+                <li>Engagement</li>
+                <li>Cinematic Films</li>
+            </ul>
+        </div>
+
+        <!-- Pinned Wrapper for Opposite Scroll -->
+        <div class="reverse-parallax-wrapper" id="parallaxScrollSection">
+            <div class="reverse-columns-track">
+
+                <!-- COLUMN 1: LEFT COLUMN (Moves UP on forward scroll) -->
+                <div class="parallax-col" id="galleryColLeft">
+                    <div class="gallery-card card-tall">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop"
+                            alt="The Royal Vows">
+                        <div class="card-meta">
+                            <span class="card-category">Traditional Wedding</span>
+                            <h3 class="card-title">The Royal Vows</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-square">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop"
+                            alt="Bride Portrait">
+                        <div class="card-meta">
+                            <span class="card-category">Portraiture</span>
+                            <h3 class="card-title">Grace of the Bride</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-medium">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000&auto=format&fit=crop"
+                            alt="Pre-Wedding Romance">
+                        <div class="card-meta">
+                            <span class="card-category">Pre-Wedding</span>
+                            <h3 class="card-title">Udaipur Whispers</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-tall">
+                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000&auto=format&fit=crop"
+                            alt="Varmala Ceremony">
+                        <div class="card-meta">
+                            <span class="card-category">Candid Moment</span>
+                            <h3 class="card-title">Sacred Unions</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 2: CENTER COLUMN (Moves DOWN in OPPOSITE DIRECTION on forward scroll) -->
+                <div class="parallax-col" id="galleryColCenter">
+                    <div class="gallery-card card-tall">
+                        <img src="https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?q=80&w=1000&auto=format&fit=crop"
+                            alt="Royal Wedding Palace">
+                        <div class="card-meta">
+                            <span class="card-category">Palace Nuptials</span>
+                            <h3 class="card-title">Imperial Grandeur</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-medium">
+                        <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?q=80&w=1000&auto=format&fit=crop"
+                            alt="Mehndi Celebration">
+                        <div class="card-meta">
+                            <span class="card-category">Mehndi &amp; Sangeet</span>
+                            <h3 class="card-title">Colors of Euphoria</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-tall">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
+                            alt="Royal Groom">
+                        <div class="card-meta">
+                            <span class="card-category">Groom Portrait</span>
+                            <h3 class="card-title">Regal Heritage</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-square">
+                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1000&auto=format&fit=crop"
+                            alt="Haldi Joy">
+                        <div class="card-meta">
+                            <span class="card-category">Haldi Ritual</span>
+                            <h3 class="card-title">Sunlight &amp; Marigold</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-tall">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1000&auto=format&fit=crop"
+                            alt="Grand Mandap Decor">
+                        <div class="card-meta">
+                            <span class="card-category">Wedding Decor</span>
+                            <h3 class="card-title">The Royal Canopy</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-medium">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000&auto=format&fit=crop"
+                            alt="Celebration Lights">
+                        <div class="card-meta">
+                            <span class="card-category">Sangeet Night</span>
+                            <h3 class="card-title">Celestial Glow</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 3: RIGHT COLUMN (Moves UP on forward scroll) -->
+                <div class="parallax-col" id="galleryColRight">
+                    <div class="gallery-card card-square">
+                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1000&auto=format&fit=crop"
+                            alt="Sacred Sindoor">
+                        <div class="card-meta">
+                            <span class="card-category">Rituals</span>
+                            <h3 class="card-title">The Sacred Sindoor</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-tall">
+                        <img src="https://images.unsplash.com/photo-1509927083803-4bd519298ac4?q=80&w=1000&auto=format&fit=crop"
+                            alt="Sunset Couple Portrait">
+                        <div class="card-meta">
+                            <span class="card-category">Pre-Wedding</span>
+                            <h3 class="card-title">Dunes of Jaisalmer</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-tall">
+                        <img src="https://images.unsplash.com/photo-1595769816263-9b910be24d5f?q=80&w=1000&auto=format&fit=crop"
+                            alt="Intimate Glance">
+                        <div class="card-meta">
+                            <span class="card-category">Candid Emotion</span>
+                            <h3 class="card-title">Forever In A Gaze</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-medium">
+                        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1000&auto=format&fit=crop"
+                            alt="Heirloom Jewels">
+                        <div class="card-meta">
+                            <span class="card-category">Details</span>
+                            <h3 class="card-title">Heritage Heirloom</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ----------------------------------------------------
+         SECTION 3B: CATEGORY-WISE PHOTOGRAPHY GALLERY
+    ---------------------------------------------------- -->
+    <section class="section-category-gallery" id="gallerySection">
+        <div class="category-gallery-container">
+            <div class="cat-gallery-header">
+                <span class="section-subhead">Visual Archive</span>
+                <h2 class="section-title">THE PHOTOGRAPHY <em>COLLECTIONS</em></h2>
+                <p class="cat-gallery-desc">
+                    Explore our curated royal celebrations across India and destinations worldwide. Select any collection to view our finest frames.
+                </p>
+
+                <!-- Category Tab Navigation -->
+                <div class="cat-tabs-wrapper">
+                    <nav class="cat-tabs-nav" id="categoryTabsNav" aria-label="Photography Categories">
+                        <button class="cat-tab-btn active" data-category="all">
+                            <span>ALL STORIES</span>
+                        </button>
+                        <button class="cat-tab-btn" data-category="weddings">
+                            <span>WEDDINGS</span>
+                        </button>
+                        <button class="cat-tab-btn" data-category="pre-wedding">
+                            <span>PRE-WEDDING</span>
+                        </button>
+                        <button class="cat-tab-btn" data-category="engagement">
+                            <span>ENGAGEMENT</span>
+                        </button>
+                        <button class="cat-tab-btn" data-category="haldi-mehndi">
+                            <span>HALDI &amp; MEHNDI</span>
+                        </button>
+                        <button class="cat-tab-btn" data-category="candid">
+                            <span>CANDID MOMENTS</span>
+                        </button>
+                        <button class="cat-tab-btn" data-category="reception">
+                            <span>RECEPTION</span>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Dynamic Photography Masonry Grid -->
+            <div class="photography-dynamic-grid" id="photographyGrid">
+                <!-- Injected via JavaScript from GALLERY_DATA -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Fullscreen Photography Lightbox Modal -->
+    <div class="photo-lightbox-modal" id="photoLightbox" role="dialog" aria-modal="true" aria-label="Photo Lightbox">
+        <button class="lightbox-close-btn" id="lightboxClose" aria-label="Close Lightbox">&times;</button>
+        <button class="lightbox-arrow-btn lightbox-prev" id="lightboxPrev" aria-label="Previous Photo">&#10094;</button>
+        <button class="lightbox-arrow-btn lightbox-next" id="lightboxNext" aria-label="Next Photo">&#10095;</button>
+        
+        <div class="lightbox-content-box">
+            <div class="lightbox-img-wrapper">
+                <img src="" alt="" id="lightboxImg">
+            </div>
+            <div class="lightbox-caption">
+                <span class="lightbox-cat-tag" id="lightboxCategory">Weddings</span>
+                <h3 class="lightbox-title" id="lightboxTitle">The Royal Vows</h3>
+                <p class="lightbox-desc" id="lightboxDesc">Regal Gujarati wedding rituals captured in traditional splendor.</p>
+                <div class="lightbox-counter" id="lightboxCounter">1 / 18</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ----------------------------------------------------
+         SECTION 4: GSAP CIRCULAR IMAGE MASK REVEAL (4-PHOTO MULTI-LAYER)
+    ---------------------------------------------------- -->
+    <div class="mask-section-wrapper" id="maskRevealSection">
+        <div class="mask-pinned-stage">
+            <!-- Photo 1: Base Background Layer (Aisle & Decor) -->
+            <img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?q=80&w=1920&auto=format&fit=crop"
+                alt="Grand Floral Wedding Aisle" class="mask-bg-image mask-stage-photo" id="maskPhoto1">
+
+            <!-- Photo 2: First Circle Reveal (Royal Couple Varmala) -->
+            <div class="circular-mask-container mask-circle-layer" id="circleMaskLayer1">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=85&w=1920&auto=format&fit=crop"
+                    alt="Royal Couple Varmala Ceremony" class="mask-stage-photo" id="maskPhoto2">
+            </div>
+
+            <!-- Photo 3: Second Circle Reveal (Regal Gujarati Bride Portrait) -->
+            <div class="circular-mask-container mask-circle-layer" id="circleMaskLayer2">
+                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=85&w=1920&auto=format&fit=crop"
+                    alt="Regal Gujarati Heritage Bride" class="mask-stage-photo" id="maskPhoto3">
+            </div>
+
+            <!-- Photo 4: Third Circle Reveal (Cinematic Mandap & Sacred Fire Rituals) -->
+            <div class="circular-mask-container mask-circle-layer" id="circleMaskLayer3">
+                <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=1920&auto=format&fit=crop"
+                    alt="Sacred Wedding Rituals & Mandap" class="mask-stage-photo" id="maskPhoto4">
+            </div>
+
+            <!-- Initial circular guidance prompt -->
+            <div class="mask-initial-prompt" id="maskPrompt">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                    <circle cx="30" cy="30" r="28" stroke="#D8C4BA" stroke-width="1.5" stroke-dasharray="4 4" />
+                    <circle cx="30" cy="30" r="8" fill="#B99A85" />
+                </svg>
+                <span>Scroll to Reveal</span>
+            </div>
+
+            <!-- Photo Indicator Pills (1, 2, 3, 4) -->
+            <div class="mask-photo-indicators" id="maskIndicators">
+                <span class="mask-indicator-dot active" data-index="1">01 &bull; AMBIANCE</span>
+                <span class="mask-indicator-dot" data-index="2">02 &bull; THE VOWS</span>
+                <span class="mask-indicator-dot" data-index="3">03 &bull; HERITAGE</span>
+                <span class="mask-indicator-dot" data-index="4">04 &bull; SACRED RITUALS</span>
+            </div>
+
+            <!-- Content revealed as the final story unfolds -->
+            <div class="mask-overlay-content" id="maskContent">
+                <span class="section-subhead">Cinematic Immersion</span>
+                <h2>MOMENTS THAT LAST FOREVER</h2>
+                <p>
+                    Every film we craft is a cinematic love letter to generation, legacy, and boundless emotion. Witness
+                    life unfold at 24 frames per second.
+                </p>
+                <div style="margin-top: 2.5rem;">
+                    <a href="#films" class="btn-luxury">VIEW OUR FILMS &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ----------------------------------------------------
+         SECTION 4B: LUXURY STACKED IMAGE CARD REVEAL
+    ---------------------------------------------------- -->
+    <section class="section-stacked-cards" id="stackedCardsSection">
+        <div class="stacked-cards-container">
+            <div class="stacked-cards-header">
+                <span class="section-subhead">Cinematic Chronicles</span>
+                <h2 class="section-title">EVERY FRAME TELLS A STORY</h2>
+                <p class="stacked-cards-subtitle">Timeless moments, beautifully captured.</p>
+            </div>
+
+            <!-- Stacking Viewport Stage -->
+            <div class="stacked-stage" id="stackedStage">
+                <!-- Card 1: WEDDING STORIES -->
+                <article class="stacked-card" id="stackedCard1">
+                    <div class="stacked-card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=85&w=1600&auto=format&fit=crop"
+                            alt="Wedding Stories - Aakar Films" loading="lazy">
+                    </div>
+                    <div class="stacked-card-overlay">
+                        <span class="stacked-card-badge">01 &bull; CHAPTER</span>
+                        <div class="stacked-card-info">
+                            <h3 class="stacked-card-title">WEDDING STORIES</h3>
+                            <p class="stacked-card-desc">The beginning of forever.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2: PRE-WEDDING -->
+                <article class="stacked-card" id="stackedCard2">
+                    <div class="stacked-card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=85&w=1600&auto=format&fit=crop"
+                            alt="Pre-Wedding Romance - Aakar Films" loading="lazy">
+                    </div>
+                    <div class="stacked-card-overlay">
+                        <span class="stacked-card-badge">02 &bull; CHAPTER</span>
+                        <div class="stacked-card-info">
+                            <h3 class="stacked-card-title">PRE-WEDDING</h3>
+                            <p class="stacked-card-desc">Love before the forever.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3: ENGAGEMENT -->
+                <article class="stacked-card" id="stackedCard3">
+                    <div class="stacked-card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=85&w=1600&auto=format&fit=crop"
+                            alt="Engagement Promises - Aakar Films" loading="lazy">
+                    </div>
+                    <div class="stacked-card-overlay">
+                        <span class="stacked-card-badge">03 &bull; CHAPTER</span>
+                        <div class="stacked-card-info">
+                            <h3 class="stacked-card-title">ENGAGEMENT</h3>
+                            <p class="stacked-card-desc">A promise of a beautiful journey.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4: HALDI & MEHNDI -->
+                <article class="stacked-card" id="stackedCard4">
+                    <div class="stacked-card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?q=85&w=1600&auto=format&fit=crop"
+                            alt="Haldi and Mehndi Celebrations - Aakar Films" loading="lazy">
+                    </div>
+                    <div class="stacked-card-overlay">
+                        <span class="stacked-card-badge">04 &bull; CHAPTER</span>
+                        <div class="stacked-card-info">
+                            <h3 class="stacked-card-title">HALDI &amp; MEHNDI</h3>
+                            <p class="stacked-card-desc">Colours, traditions and unforgettable emotions.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 5: RECEPTION -->
+                <article class="stacked-card" id="stackedCard5">
+                    <div class="stacked-card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=85&w=1600&auto=format&fit=crop"
+                            alt="Royal Reception Gala - Aakar Films" loading="lazy">
+                    </div>
+                    <div class="stacked-card-overlay">
+                        <span class="stacked-card-badge">05 &bull; CHAPTER</span>
+                        <div class="stacked-card-info">
+                            <h3 class="stacked-card-title">RECEPTION</h3>
+                            <p class="stacked-card-desc">An evening of elegance and celebration.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Bottom Progress Indicator -->
+            <div class="stacked-progress-wrap">
+                <span class="stacked-progress-num" id="stackedCurrentIdx">01</span>
+                <div class="stacked-progress-bar">
+                    <div class="stacked-progress-fill" id="stackedProgressFill"></div>
+                </div>
+                <span class="stacked-progress-num">05</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ----------------------------------------------------
+         SECTION 5: OUR FILMS (CINEMATOGRAPHY)
+    ---------------------------------------------------- -->
+    <section class="section-films" id="films">
+        <div class="films-container">
+            <div class="films-header">
+                <div>
+                    <span class="section-subhead">Cinematography</span>
+                    <h2 class="section-title">LOVE STORIES IN MOTION</h2>
+                </div>
+                <p style="color: var(--text-secondary); max-width: 400px; font-size: 0.9rem;">
+                    Shot with cinema-grade optics and graded with custom royal color palettes. Click to experience each
+                    film.
+                </p>
+            </div>
+
+            <div class="films-grid">
+                <!-- Film 1 -->
+                <div class="film-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+                    <div class="film-thumbnail-wrapper">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200&auto=format&fit=crop"
+                            alt="Aarav and Diya - Udaipur">
+                        <div class="play-button-btn">
+                            <svg viewBox="0 0 24 24">
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="film-details">
+                        <div class="film-info">
+                            <h3>Aarav &amp; Diya</h3>
+                            <p>The Palace of Udaipur / Gujarati Wedding</p>
+                        </div>
+                        <span class="film-duration">4K CINEMA</span>
+                    </div>
+                </div>
+
+                <!-- Film 2 -->
+                <div class="film-card" data-video="https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1">
+                    <div class="film-thumbnail-wrapper">
+                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1200&auto=format&fit=crop"
+                            alt="Kabir and Ananya - Jaipur">
+                        <div class="play-button-btn">
+                            <svg viewBox="0 0 24 24">
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="film-details">
+                        <div class="film-info">
+                            <h3>Kabir &amp; Ananya</h3>
+                            <p>Jai Mahal Palace / Jaipur Royal Wedding</p>
+                        </div>
+                        <span class="film-duration">4K CINEMA</span>
+                    </div>
+                </div>
+
+                <!-- Film 3 -->
+                <div class="film-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+                    <div class="film-thumbnail-wrapper">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop"
+                            alt="Rohan and Meera - Goa">
+                        <div class="play-button-btn">
+                            <svg viewBox="0 0 24 24">
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="film-details">
+                        <div class="film-info">
+                            <h3>Rohan &amp; Meera</h3>
+                            <p>Cliffside Twilight / Goa Destination</p>
+                        </div>
+                        <span class="film-duration">4K CINEMA</span>
+                    </div>
+                </div>
+
+                <!-- Film 4 -->
+                <div class="film-card" data-video="https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1">
+                    <div class="film-thumbnail-wrapper">
+                        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1200&auto=format&fit=crop"
+                            alt="Dev and Priya - Ahmedabad">
+                        <div class="play-button-btn">
+                            <svg viewBox="0 0 24 24">
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="film-details">
+                        <div class="film-info">
+                            <h3>Dev &amp; Priya</h3>
+                            <p>Heritage Haveli / Ahmedabad</p>
+                        </div>
+                        <span class="film-duration">4K CINEMA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Video Modal Player -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-inner">
+            <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+            <iframe id="videoIframe" src=""
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- ----------------------------------------------------
+         SECTION 6: CONTACT & BOOKING
+    ---------------------------------------------------- -->
+    <section class="section-contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-left">
+                <span class="section-subhead">Inquire Availability</span>
+                <h2>LET'S CREATE SOMETHING BEAUTIFUL</h2>
+                <p>
+                    We accept a limited number of destination wedding commissions each year to ensure uncompromising
+                    artistic dedication to every couple. Tell us your date and vision.
+                </p>
+
+                <!-- Working WhatsApp Button -->
+                <a href="https://wa.me/919876543210?text=Hello%20Aakar%20Films%2C%20I%20would%20like%20to%20inquire%20about%20wedding%20photography%20and%20cinematography%20services."
+                    target="_blank" rel="noopener noreferrer" class="whatsapp-cta">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-1.125-.062-.26-.085-.59-.204-1.023-.392-1.815-.789-3.003-2.617-3.094-2.738-.091-.121-.741-.987-.741-1.884 0-.897.469-1.339.637-1.52.167-.182.366-.227.488-.227.121 0 .243.002.348.007.112.006.262-.042.41.314.152.365.517 1.26.562 1.352.045.091.076.197.015.318-.061.121-.091.197-.182.303-.091.106-.192.237-.274.318-.091.091-.186.19-.08.373.106.182.471.777 1.01 1.258.694.619 1.28.811 1.462.902.182.091.289.076.395-.045.106-.121.456-.532.577-.714.121-.182.243-.152.41-.091.167.061 1.063.501 1.245.592.182.091.303.136.348.212.045.076.045.44-.099.845zM12 2C6.477 2 2 6.477 2 12c0 1.891.526 3.662 1.442 5.177L2 22l4.982-1.409C8.423 21.492 10.153 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" />
+                    </svg>
+                    <span>Instant WhatsApp Inquiry</span>
+                </a>
+
+                <div class="contact-direct-info">
+                    <div class="direct-item">
+                        <label>Location &amp; Studio</label>
+                        <span>Ahmedabad &amp; Mumbai, India</span>
+                    </div>
+                    <div class="direct-item">
+                        <label>Email Studio</label>
+                        <span>contact@aakarfilms.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Inquiry Form -->
+            <form class="contact-form" id="bookingForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="clientName">Your Full Name *</label>
+                        <input type="text" id="clientName" class="form-control" placeholder="e.g. Priyanshi Patel"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientPhone">Phone / WhatsApp Number *</label>
+                        <input type="tel" id="clientPhone" class="form-control" placeholder="+91 98765 43210" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="clientEmail">Email Address *</label>
+                        <input type="email" id="clientEmail" class="form-control" placeholder="priyanshi@example.com"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weddingDate">Wedding / Event Date *</label>
+                        <input type="date" id="weddingDate" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventLocation">Event Destination / City *</label>
+                        <input type="text" id="eventLocation" class="form-control"
+                            placeholder="e.g. Udaipur / Ahmedabad" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceType">Services Required *</label>
+                        <select id="serviceType" class="form-control" required>
+                            <option value="" disabled selected>Select Desired Service</option>
+                            <option value="Complete Photo & Cinema Package">Complete Photo &amp; Cinema Package</option>
+                            <option value="Luxury Wedding Cinematography">Luxury Wedding Cinematography</option>
+                            <option value="Fine-Art Wedding Photography">Fine-Art Wedding Photography</option>
+                            <option value="Pre-Wedding Film & Shoot">Pre-Wedding Film &amp; Shoot</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="clientMessage">Tell Us About Your Vision</label>
+                    <textarea id="clientMessage" class="form-control" rows="3"
+                        placeholder="Share your story, guest count, venues or special events..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-luxury btn-submit">
+                    <span>SEND COMMISSION INQUIRY</span>
+                    &rarr;
+                </button>
+
+                <div class="form-feedback" id="formFeedback">
+                    Thank you. Your inquiry has been received. Our team will contact you within 24 hours.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ----------------------------------------------------
+         FOOTER
+    ---------------------------------------------------- -->
+    <footer>
+        <div class="footer-logo-box">
+            <a href="#home" class="brand-logo-container" style="justify-content: center;">
+                <img src="calligraphy_icon.png" alt="Aakar" class="brand-icon-img" style="height: 48px;">
+                <div class="brand-text-wrap" style="text-align: left;">
+                    <span class="brand-title-text" style="font-size: 1.35rem;">AAKAR FILMS</span>
+                    <span class="logo-subtext">Luxury Weddings</span>
+                </div>
+            </a>
+        </div>
+
+        <ul class="footer-nav">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#weddings">Weddings</a></li>
+            <li><a href="#films">Films</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <p class="footer-copy">
+            &copy; <span id="yearVal">2026</span> AAKAR FILMS. All Rights Reserved. Luxury Wedding Photography &amp;
+            Cinematography.
+        </p>
+    </footer>
+
+    <!-- ----------------------------------------------------
+         SCRIPTS: GSAP + SCROLLTRIGGER + LENIS + LOGIC
+    ---------------------------------------------------- -->
+    <script src="js/gallery-data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/cursor-trail.js"></script>
+    <script src="js/split-text.js"></script>
+    <script src="js/stacked-cards.js"></script>
+</body>
+
+</html>

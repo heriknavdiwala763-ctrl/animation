@@ -1,0 +1,38 @@
+/* ----------------------------------------------------
+   AAKAR FILMS - PREMIUM GSAP SPLIT TEXT ANIMATION SYSTEM
+---------------------------------------------------- */
+
+/* Ensure wrapper elements maintain typography & flow */
+.split-word-wrapper,
+.split-char-wrapper {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    line-height: inherit;
+    padding-bottom: 0.12em; /* Prevents descender clipping on italic/script serifs */
+    margin-bottom: -0.12em;
+}
+
+.split-word {
+    display: inline-block;
+    will-change: transform, opacity;
+    white-space: pre;
+    transform-origin: 50% 100%;
+}
+
+.split-char {
+    display: inline-block;
+    will-change: transform, opacity;
+    white-space: pre;
+    transform-origin: 50% 50%;
+}
+
+/* Accessibility: Respect Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+    .split-word,
+    .split-char {
+        transform: none !important;
+        opacity: 1 !important;
+        transition: none !important;
+    }
+}
