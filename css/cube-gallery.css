@@ -1,0 +1,409 @@
+/* ----------------------------------------------------
+   AAKAR FILMS - INTERACTIVE 3D PHOTO CUBE GALLERY
+   Luxury 6-Sided Wedding Moments Cube
+---------------------------------------------------- */
+.section-cube-gallery {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding: 6rem 1.5rem 8rem 1.5rem;
+    background-color: var(--bg-dark, #0d0202);
+    background: radial-gradient(circle at center, #230808 0%, #0d0202 70%, #050101 100%);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid rgba(185, 154, 133, 0.25);
+    border-bottom: 1px solid rgba(185, 154, 133, 0.25);
+    box-sizing: border-box;
+    cursor: default;
+}
+
+/* Ambient Stage Lighting */
+.cube-ambient-glow {
+    position: absolute;
+    width: min(650px, 90vw);
+    height: min(650px, 90vw);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(185, 154, 133, 0.12) 0%, rgba(84, 18, 18, 0.25) 45%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(40px);
+    animation: cubeGlowPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes cubeGlowPulse {
+    0% { transform: scale(0.9); opacity: 0.6; }
+    100% { transform: scale(1.15); opacity: 0.95; }
+}
+
+/* Section Header */
+.cube-header {
+    text-align: center;
+    max-width: 800px;
+    margin-bottom: 3.5rem;
+    z-index: 2;
+    position: relative;
+}
+
+.cube-header .section-subhead {
+    font-size: 0.76rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent-gold, #cfa878);
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.cube-header .section-title {
+    font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: #FFFFFF;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
+    letter-spacing: 1px;
+}
+
+.cube-header .cube-instructions {
+    color: var(--text-secondary, rgba(255, 255, 255, 0.65));
+    font-size: 0.82rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.cube-drag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    background: rgba(185, 154, 133, 0.1);
+    border: 1px solid rgba(185, 154, 133, 0.3);
+    border-radius: 20px;
+    color: #e5c59f;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+}
+
+/* ----------------------------------------------------
+   3D CUBE STAGE & PERSPECTIVE
+---------------------------------------------------- */
+.cube-viewport {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1400px;
+    perspective-origin: 50% 50%;
+    z-index: 5;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Interactive Hit Area for Click/Drag & Touch */
+.cube-hit-area {
+    position: absolute;
+    inset: -40px;
+    cursor: grab;
+    z-index: 10;
+    touch-action: none;
+}
+
+.cube-hit-area.is-dragging {
+    cursor: grabbing;
+}
+
+/* Floating Wrapper for Gentle Floating Motion */
+.cube-floating-rig {
+    position: relative;
+    width: var(--cube-size, 340px);
+    height: var(--cube-size, 340px);
+    transform-style: preserve-3d;
+    animation: cubeGentleFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes cubeGentleFloat {
+    0% { transform: translateY(-8px); }
+    100% { transform: translateY(8px); }
+}
+
+/* Master 3D Cube Container (holds rotation angles) */
+.photo-cube-3d {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+/* Cube Ground Shadow */
+.cube-floor-shadow {
+    position: absolute;
+    width: calc(var(--cube-size, 340px) * 1.25);
+    height: calc(var(--cube-size, 340px) * 1.25);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotateX(90deg) translateZ(-240px);
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.85) 0%, rgba(13, 2, 2, 0.4) 45%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(25px);
+}
+
+/* ----------------------------------------------------
+   CUBE FACES (6 Sides)
+   --cube-size: 340px => translateZ(170px)
+---------------------------------------------------- */
+:root {
+    --cube-size: 340px;
+    --cube-half: 170px;
+}
+
+.cube-face {
+    position: absolute;
+    inset: 0;
+    width: var(--cube-size);
+    height: var(--cube-size);
+    box-sizing: border-box;
+    background-color: #120303;
+    overflow: hidden;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    border-radius: 8px;
+    border: 1px solid rgba(185, 154, 133, 0.4);
+    box-shadow:
+        inset 0 0 40px rgba(0, 0, 0, 0.7),
+        0 10px 40px rgba(0, 0, 0, 0.85),
+        0 0 30px rgba(185, 154, 133, 0.15);
+    transform-style: preserve-3d;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Face Orientations */
+.face-front {
+    transform: rotateY(0deg) translateZ(var(--cube-half));
+}
+
+.face-back {
+    transform: rotateY(180deg) translateZ(var(--cube-half));
+}
+
+.face-right {
+    transform: rotateY(90deg) translateZ(var(--cube-half));
+}
+
+.face-left {
+    transform: rotateY(-90deg) translateZ(var(--cube-half));
+}
+
+.face-top {
+    transform: rotateX(90deg) translateZ(var(--cube-half));
+}
+
+.face-bottom {
+    transform: rotateX(-90deg) translateZ(var(--cube-half));
+}
+
+/* Face Inner Elements */
+.cube-face-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    filter: brightness(0.92) contrast(1.05);
+    transform: scale(1.03);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+    pointer-events: none;
+}
+
+.cube-face-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(10, 2, 2, 0.15) 0%,
+        transparent 40%,
+        rgba(10, 2, 2, 0.55) 75%,
+        rgba(10, 2, 2, 0.9) 100%
+    );
+    pointer-events: none;
+}
+
+/* Light Sheen / Glass reflection per face */
+.cube-face-sheen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.22) 0%,
+        rgba(207, 168, 120, 0.08) 35%,
+        transparent 65%
+    );
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+/* Subtle Label for Each Face */
+.cube-face-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.2rem 1rem 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    pointer-events: none;
+    transform: translateZ(10px);
+}
+
+.cube-face-tag {
+    font-size: 0.62rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-gold, #cfa878);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.cube-face-title {
+    font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+    font-size: 1.05rem;
+    color: #FFFFFF;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+}
+
+/* ----------------------------------------------------
+   CUBE CONTROLS (QUICK FACE SWITCHER BUTTONS)
+---------------------------------------------------- */
+.cube-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 3rem;
+    z-index: 6;
+    max-width: 900px;
+    padding: 0 1rem;
+}
+
+.cube-nav-btn {
+    background: rgba(26, 6, 6, 0.75);
+    border: 1px solid rgba(185, 154, 133, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.55rem 1.15rem;
+    border-radius: 24px;
+    font-family: var(--font-sans, "Montserrat", sans-serif);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(8px);
+}
+
+.cube-nav-btn:hover {
+    background: rgba(84, 18, 18, 0.85);
+    border-color: var(--accent-gold, #cfa878);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(185, 154, 133, 0.25);
+}
+
+.cube-nav-btn.active {
+    background: linear-gradient(135deg, #541212 0%, #2d0707 100%);
+    border-color: var(--accent-gold, #cfa878);
+    color: #FFFFFF;
+    box-shadow: 0 0 15px rgba(207, 168, 120, 0.35);
+}
+
+/* ----------------------------------------------------
+   RESPONSIVE DESIGN (TABLET & MOBILE)
+---------------------------------------------------- */
+@media (max-width: 992px) {
+    :root {
+        --cube-size: 300px;
+        --cube-half: 150px;
+    }
+    .cube-viewport {
+        height: 440px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --cube-size: 250px;
+        --cube-half: 125px;
+    }
+    .section-cube-gallery {
+        padding: 4.5rem 1rem 6rem 1rem;
+    }
+    .cube-header {
+        margin-bottom: 2.2rem;
+    }
+    .cube-header .section-title {
+        font-size: 1.85rem;
+    }
+    .cube-viewport {
+        height: 380px;
+        perspective: 1000px;
+    }
+    .cube-face-title {
+        font-size: 0.9rem;
+    }
+    .cube-controls {
+        gap: 0.45rem;
+        margin-top: 2rem;
+    }
+    .cube-nav-btn {
+        padding: 0.45rem 0.85rem;
+        font-size: 0.65rem;
+        letter-spacing: 1.5px;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --cube-size: 220px;
+        --cube-half: 110px;
+    }
+    .cube-viewport {
+        height: 330px;
+    }
+    .cube-face-label {
+        padding: 0.8rem 0.5rem 0.6rem 0.5rem;
+    }
+    .cube-face-tag {
+        font-size: 0.55rem;
+        letter-spacing: 2px;
+    }
+    .cube-face-title {
+        font-size: 0.8rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cube-floating-rig,
+    .cube-ambient-glow {
+        animation: none !important;
+    }
+    .photo-cube-3d {
+        transition: none !important;
+    }
+}

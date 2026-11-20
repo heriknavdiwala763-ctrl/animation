@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="css/split-text.css">
     <link rel="stylesheet" href="css/stacked-cards.css">
     <link rel="stylesheet" href="css/curtain-reveal.css">
+    <link rel="stylesheet" href="css/cube-gallery.css">
 </head>
 
 <body>
@@ -556,6 +557,126 @@
     </section>
 
     <!-- ----------------------------------------------------
+         SECTION 4D: INTERACTIVE 3D PHOTO CUBE GALLERY
+    ---------------------------------------------------- -->
+    <section class="section-cube-gallery" id="cubeGallerySection">
+        <div class="cube-ambient-glow"></div>
+
+        <div class="cube-header">
+            <span class="section-subhead">SIX SIDES. COUNTLESS BEAUTIFUL MOMENTS.</span>
+            <h2 class="section-title">A WORLD OF MEMORIES</h2>
+            <div class="cube-instructions">
+                <span class="cube-drag-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M16 12l-4-4-4 4M12 16V8"></path>
+                    </svg>
+                    Drag or Click to Explore 3D Cube
+                </span>
+            </div>
+        </div>
+
+        <!-- 3D Perspective Viewport -->
+        <div class="cube-viewport" id="cubeViewport">
+            <!-- Invisible Touch/Mouse Drag Hit Area -->
+            <div class="cube-hit-area" id="cubeHitArea" title="Click and drag to rotate the 3D photo cube"></div>
+
+            <!-- Gentle Floating Animation Rig -->
+            <div class="cube-floating-rig">
+                <!-- Master 3D Cube Container (Rotates on X & Y) -->
+                <div class="photo-cube-3d" id="photoCube3D">
+
+                    <!-- FACE 1: FRONT - Bride Portrait Photography -->
+                    <div class="cube-face face-front">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop"
+                            alt="Bride Portrait Photography - Aakar Films" class="cube-face-img">
+                        <div class="cube-face-overlay"></div>
+                        <div class="cube-face-sheen"></div>
+                        <div class="cube-face-label">
+                            <span class="cube-face-tag">Face 1</span>
+                            <h4 class="cube-face-title">Bride Portrait</h4>
+                        </div>
+                    </div>
+
+                    <!-- FACE 2: RIGHT - Groom Portrait Photography -->
+                    <div class="cube-face face-right">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
+                            alt="Groom Portrait Photography - Aakar Films" class="cube-face-img">
+                        <div class="cube-face-overlay"></div>
+                        <div class="cube-face-sheen"></div>
+                        <div class="cube-face-label">
+                            <span class="cube-face-tag">Face 2</span>
+                            <h4 class="cube-face-title">Groom Portrait</h4>
+                        </div>
+                    </div>
+
+                    <!-- FACE 3: BACK - Wedding Couple Photography -->
+                    <div class="cube-face face-back">
+                        <img src="assets/images/curtain-wedding-couple.jpg"
+                            alt="Wedding Couple Photography - Aakar Films" class="cube-face-img">
+                        <div class="cube-face-overlay"></div>
+                        <div class="cube-face-sheen"></div>
+                        <div class="cube-face-label">
+                            <span class="cube-face-tag">Face 3</span>
+                            <h4 class="cube-face-title">Wedding Couple</h4>
+                        </div>
+                    </div>
+
+                    <!-- FACE 4: LEFT - Haldi & Mehndi Photography -->
+                    <div class="cube-face face-left">
+                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1000&auto=format&fit=crop"
+                            alt="Haldi & Mehndi Photography - Aakar Films" class="cube-face-img">
+                        <div class="cube-face-overlay"></div>
+                        <div class="cube-face-sheen"></div>
+                        <div class="cube-face-label">
+                            <span class="cube-face-tag">Face 4</span>
+                            <h4 class="cube-face-title">Haldi &amp; Mehndi</h4>
+                        </div>
+                    </div>
+
+                    <!-- FACE 5: TOP - Pre-Wedding Photography -->
+                    <div class="cube-face face-top">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000&auto=format&fit=crop"
+                            alt="Pre-Wedding Photography - Aakar Films" class="cube-face-img">
+                        <div class="cube-face-overlay"></div>
+                        <div class="cube-face-sheen"></div>
+                        <div class="cube-face-label">
+                            <span class="cube-face-tag">Face 5</span>
+                            <h4 class="cube-face-title">Pre-Wedding Romance</h4>
+                        </div>
+                    </div>
+
+                    <!-- FACE 6: BOTTOM - Wedding Rituals & Candid Moments -->
+                    <div class="cube-face face-bottom">
+                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1000&auto=format&fit=crop"
+                            alt="Wedding Rituals & Candid Moments - Aakar Films" class="cube-face-img">
+                        <div class="cube-face-overlay"></div>
+                        <div class="cube-face-sheen"></div>
+                        <div class="cube-face-label">
+                            <span class="cube-face-tag">Face 6</span>
+                            <h4 class="cube-face-title">Sacred Rituals &amp; Candids</h4>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Realistic 3D Ground Floor Shadow -->
+            <div class="cube-floor-shadow"></div>
+        </div>
+
+        <!-- Quick Interactive Face Switcher Buttons -->
+        <div class="cube-controls">
+            <button class="cube-nav-btn active" data-face="front">Bride</button>
+            <button class="cube-nav-btn" data-face="right">Groom</button>
+            <button class="cube-nav-btn" data-face="back">Couple</button>
+            <button class="cube-nav-btn" data-face="left">Haldi &amp; Mehndi</button>
+            <button class="cube-nav-btn" data-face="top">Pre-Wedding</button>
+            <button class="cube-nav-btn" data-face="bottom">Rituals</button>
+        </div>
+    </section>
+
+    <!-- ----------------------------------------------------
          SECTION 5: OUR FILMS (CINEMATOGRAPHY)
     ---------------------------------------------------- -->
     <section class="section-films" id="films">
@@ -802,6 +923,7 @@
     <script src="js/stacked-cards.js"></script>
     <script src="js/perspective-gallery.js"></script>
     <script src="js/curtain-reveal.js"></script>
+    <script src="js/cube-gallery.js"></script>
 </body>
 
 </html>
