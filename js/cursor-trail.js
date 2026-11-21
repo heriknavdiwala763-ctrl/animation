@@ -99,10 +99,10 @@
                     ctx.lineCap = "round";
                     ctx.lineJoin = "round";
                     ctx.lineWidth = lineWidth;
-                    // Luxury gold/champagne glow trail
-                    ctx.strokeStyle = `rgba(207, 168, 120, ${alpha})`;
+                    // Luxury soft rose & ivory glow trail (Gold-free)
+                    ctx.strokeStyle = `rgba(201, 143, 145, ${alpha})`;
                     ctx.shadowBlur = 8;
-                    ctx.shadowColor = `rgba(216, 196, 186, ${alpha * 0.8})`;
+                    ctx.shadowColor = `rgba(226, 184, 181, ${alpha * 0.8})`;
                     ctx.stroke();
                 }
             }

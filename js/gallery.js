@@ -9,6 +9,7 @@
 
     const lightbox = document.getElementById("photoLightbox");
     const lightboxImg = document.getElementById("lightboxImg");
+    const lightboxVideo = document.getElementById("lightboxVideo");
     const lightboxTitle = document.getElementById("lightboxTitle");
     const lightboxCategory = document.getElementById("lightboxCategory");
     const lightboxDesc = document.getElementById("lightboxDesc");
@@ -38,14 +39,27 @@
 
             items.forEach((item, index) => {
                 const card = document.createElement("article");
-                card.className = `photo-grid-card grid-aspect-${item.aspect || "tall"}`;
+                card.className = `photo-grid-card holo-panel grid-aspect-${item.aspect || "tall"}`;
                 card.setAttribute("data-id", item.id);
                 card.setAttribute("tabindex", "0");
                 card.setAttribute("role", "button");
                 card.setAttribute("aria-label", `View ${item.title}`);
 
+                const hasVideo = !!item.video;
+                const mediaHTML = hasVideo 
+                    ? `<video class="holo-panel-video" src="${item.video}" autoplay loop muted playsinline poster="${item.image}"></video>`
+                    : `<img src="${item.image}" alt="${item.title}" loading="lazy">`;
+
+                const videoTagHTML = hasVideo
+                    ? `<div class="holo-video-tag"><span class="holo-video-tag-pulse"></span>HOLO LIVE</div>`
+                    : '';
+
                 card.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}" loading="lazy">
+                    ${mediaHTML}
+                    ${videoTagHTML}
+                    <div class="holo-scanline"></div>
+                    <div class="holo-sweep-light"></div>
+                    <div class="card-3d-sheen"></div>
                     <div class="photo-view-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
@@ -115,8 +129,23 @@
         const item = filteredList[activeIndex];
         if (!item) return;
 
-        lightboxImg.src = item.image;
-        lightboxImg.alt = item.title;
+        if (item.video && lightboxVideo) {
+            lightboxImg.style.display = "none";
+            lightboxVideo.style.display = "block";
+            lightboxVideo.src = item.video;
+            lightboxVideo.poster = item.image;
+            lightboxVideo.play().catch(() => {});
+        } else {
+            if (lightboxVideo) {
+                lightboxVideo.pause();
+                lightboxVideo.style.display = "none";
+                lightboxVideo.src = "";
+            }
+            lightboxImg.style.display = "block";
+            lightboxImg.src = item.image;
+            lightboxImg.alt = item.title;
+        }
+
         lightboxTitle.textContent = item.title;
         lightboxCategory.textContent = item.categoryLabel;
         lightboxDesc.textContent = item.description;
@@ -126,6 +155,11 @@
     function closeLightbox() {
         lightbox.classList.remove("active");
         lightboxImg.src = "";
+        if (lightboxVideo) {
+            lightboxVideo.pause();
+            lightboxVideo.src = "";
+            lightboxVideo.style.display = "none";
+        }
         if (typeof lenis !== "undefined") lenis.start();
         document.body.style.overflow = "";
     }

@@ -1,0 +1,286 @@
+/* ----------------------------------------------------
+   AAKAR FILMS - ROYAL ANTIQUE DOUBLE DOOR OPENING ANIMATION
+   Authentic carved palace wooden doors with 3D rotateY reveal
+---------------------------------------------------- */
+.section-contact {
+    position: relative;
+    background-color: var(--bg-primary, #350F10);
+    padding: 8rem 5rem;
+    overflow: hidden;
+    perspective: 2000px; /* High depth perspective for 3D palace gates */
+    perspective-origin: 50% 50%;
+}
+
+/* Master 3D Door Overlay Stage */
+.royal-doors-viewport {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    pointer-events: none; /* Allows form inputs to remain 100% accessible once opened */
+    display: flex;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+/* Golden Light Beam emanating from behind center seam */
+.doors-center-light {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    background: linear-gradient(90deg, transparent 0%, rgba(201, 143, 145, 0.9) 50%, transparent 100%);
+    box-shadow: 0 0 35px 12px rgba(201, 143, 145, 0.75), 0 0 70px 25px rgba(245, 240, 235, 0.45);
+    z-index: 55;
+    opacity: 0;
+    will-change: opacity, width;
+}
+
+/* Door Arch Header Frame at top */
+.doors-arch-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: repeating-linear-gradient(
+        90deg,
+        #1c0505 0px,
+        #350F10 30px,
+        #C98F91 35px,
+        #350F10 40px,
+        #1c0505 70px
+    );
+    border-bottom: 2px solid rgba(201, 143, 145, 0.6);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    z-index: 60;
+}
+
+/* Individual Door Leaf */
+.royal-door-leaf {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50.1%;
+    height: 100%;
+    background-color: #200606;
+    background: 
+        radial-gradient(ellipse at 50% 50%, #300a0a 0%, #1c0505 70%, #100202 100%),
+        repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.35) 0px,
+            transparent 2px,
+            rgba(201, 143, 145, 0.05) 4px,
+            transparent 6px,
+            rgba(0, 0, 0, 0.35) 40px
+        );
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95);
+    overflow: hidden;
+}
+
+/* Left Door Leaf (Hinged at extreme left) */
+.royal-door-left {
+    left: 0;
+    transform-origin: left center;
+    border-right: 1px solid rgba(201, 143, 145, 0.4);
+}
+
+/* Right Door Leaf (Hinged at extreme right) */
+.royal-door-right {
+    right: 0;
+    transform-origin: right center;
+    border-left: 1px solid rgba(201, 143, 145, 0.4);
+}
+
+/* Intricate Carved Panel Artwork inside each Door Leaf */
+.door-panel-artwork {
+    position: relative;
+    width: 86%;
+    height: 88%;
+    border: 3px double rgba(201, 143, 145, 0.6);
+    box-shadow: 
+        inset 0 0 35px rgba(0, 0, 0, 0.9),
+        0 0 25px rgba(201, 143, 145, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2.5rem 1.8rem;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, rgba(30, 8, 8, 0.6) 0%, rgba(16, 4, 4, 0.8) 100%);
+    border-radius: 4px;
+}
+
+/* Ornate Corner Brackets (Traditional Indian Haveli Style) */
+.door-corner {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--accent-gold, #C98F91);
+    pointer-events: none;
+}
+.corner-tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+.corner-tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+.corner-bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+.corner-br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+
+/* Upper Arch Relief Motif */
+.door-carving-top {
+    text-align: center;
+    color: var(--accent-gold, #C98F91);
+    font-size: 0.72rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+    border-bottom: 1px solid rgba(201, 143, 145, 0.3);
+    padding-bottom: 1.2rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+/* Center Mandala Flower & Brass Studs */
+.door-carving-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.door-mandala-svg {
+    width: min(150px, 35vw);
+    height: min(150px, 35vw);
+    color: var(--accent-gold, #C98F91);
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.85));
+    opacity: 0.9;
+}
+
+/* Antique Royal Brass Ring Knocker & Handle */
+.door-handle-assembly {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    z-index: 10;
+}
+
+.royal-door-left .door-handle-assembly {
+    right: 18px;
+}
+
+.royal-door-right .door-handle-assembly {
+    left: 18px;
+}
+
+.door-knocker-ring {
+    width: 38px;
+    height: 38px;
+    border: 4px solid #C98F91;
+    border-radius: 50%;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.9),
+        inset 0 2px 6px rgba(255, 255, 255, 0.4),
+        0 0 10px rgba(201, 143, 145, 0.4);
+    background: radial-gradient(circle, #5a1212 25%, #2a0505 100%);
+    position: relative;
+}
+
+.door-knocker-ring::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 6px;
+    background: #E2B8B5;
+    border-radius: 2px;
+}
+
+/* Bottom Carved Haveli Panel */
+.door-carving-bottom {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(201, 143, 145, 0.3);
+}
+
+.door-stud {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #F5F0EB 0%, #C98F91 60%, #704447 100%);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Gold Glow Accent on Contact Form when Doors Open */
+.contact-container {
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+    position: relative;
+    z-index: 10;
+}
+
+.contact-form.doors-revealed {
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(201, 143, 145, 0.25);
+    border-color: rgba(201, 143, 145, 0.55);
+    transition: all 0.8s ease;
+}
+
+/* ----------------------------------------------------
+   RESPONSIVE DESIGN (TABLETS & MOBILE)
+---------------------------------------------------- */
+@media (max-width: 1024px) {
+    .section-contact {
+        padding: 7rem 3rem;
+    }
+    .door-panel-artwork {
+        padding: 2rem 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-contact {
+        padding: 5rem 1.25rem;
+        perspective: 1200px;
+    }
+    .door-panel-artwork {
+        width: 90%;
+        height: 94%;
+        padding: 1.4rem 0.8rem;
+    }
+    .door-carving-top {
+        font-size: 0.62rem;
+        letter-spacing: 2px;
+        padding-bottom: 0.8rem;
+    }
+    .door-mandala-svg {
+        width: 80px;
+        height: 80px;
+    }
+    .door-knocker-ring {
+        width: 30px;
+        height: 30px;
+        border-width: 3px;
+    }
+    .door-stud {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .royal-doors-viewport {
+        display: none !important;
+    }
+}

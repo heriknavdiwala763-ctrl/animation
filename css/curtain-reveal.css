@@ -9,13 +9,13 @@
     min-height: 100vh;
     height: 100vh;
     height: 100svh;
-    background-color: #0b0202;
+    background-color: #1A0606;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-top: 1px solid rgba(185, 154, 133, 0.25);
-    border-bottom: 1px solid rgba(185, 154, 133, 0.25);
+    border-top: 1px solid rgba(112, 68, 71, 0.25);
+    border-bottom: 1px solid rgba(112, 68, 71, 0.25);
     padding: 0;
     margin: 0;
 }
@@ -96,11 +96,11 @@
     border-radius: 12px;
     overflow: hidden;
     background-color: #0c0303;
-    border: 1px solid rgba(185, 154, 133, 0.38);
+    border: 1px solid rgba(112, 68, 71, 0.38);
     box-shadow:
         0 30px 90px rgba(0, 0, 0, 0.95),
         0 10px 40px rgba(0, 0, 0, 0.8),
-        0 0 50px rgba(185, 154, 133, 0.18);
+        0 0 50px rgba(112, 68, 71, 0.18);
     transform-style: preserve-3d;
 }
 
@@ -119,7 +119,7 @@
 .curtain-light-beam {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 25%, rgba(207, 168, 120, 0.15) 0%, transparent 65%);
+    background: radial-gradient(circle at 50% 25%, rgba(201, 143, 145, 0.15) 0%, transparent 65%);
     pointer-events: none;
     z-index: 6;
 }
@@ -187,7 +187,7 @@
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(207, 168, 120, 0.08) 25%, transparent 65%, rgba(0, 0, 0, 0.75) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(201, 143, 145, 0.08) 25%, transparent 65%, rgba(0, 0, 0, 0.75) 100%),
         repeating-linear-gradient(
             90deg,
             rgba(0, 0, 0, 0.45) 0px,
@@ -210,11 +210,11 @@
     height: 18px;
     background: repeating-linear-gradient(
         90deg,
-        #b99a85 0px,
-        #e5c59f 6px,
-        #75553d 12px
+        #C98F91 0px,
+        #E2B8B5 6px,
+        #704447 12px
     );
-    box-shadow: 0 -4px 14px rgba(207, 168, 120, 0.45);
+    box-shadow: 0 -4px 14px rgba(201, 143, 145, 0.45);
     border-top: 1px solid rgba(255, 255, 255, 0.4);
 }
 
@@ -241,7 +241,7 @@
     z-index: 25;
     text-align: center;
     pointer-events: none;
-    color: var(--accent-light);
+    color: #E2B8B5;
     font-size: 0.75rem;
     letter-spacing: 4px;
     text-transform: uppercase;
@@ -256,7 +256,7 @@
 .curtain-prompt-icon {
     width: 24px;
     height: 24px;
-    color: var(--accent-gold);
+    color: #C98F91;
     animation: curtainPromptBounce 2s infinite ease-in-out;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8));
 }
@@ -286,7 +286,7 @@
     font-size: 0.72rem;
     letter-spacing: 5px;
     text-transform: uppercase;
-    color: var(--accent-gold);
+    color: #C98F91;
     display: inline-block;
     margin-bottom: 0.4rem;
     font-weight: 600;
@@ -296,7 +296,7 @@
 .curtain-text-overlay .section-title {
     font-family: var(--font-serif);
     font-size: clamp(1.8rem, 3.4vw, 2.7rem);
-    color: #FFFFFF;
+    color: #F5F0EB;
     font-weight: 500;
     line-height: 1.2;
     margin-bottom: 0.4rem;
@@ -305,7 +305,7 @@
 
 .curtain-text-overlay .curtain-desc {
     font-size: 0.86rem;
-    color: var(--text-secondary);
+    color: #C9BDB6;
     letter-spacing: 2px;
     line-height: 1.6;
     text-transform: uppercase;

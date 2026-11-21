@@ -1,0 +1,445 @@
+/* ----------------------------------------------------
+   AAKAR FILMS - INFINITE CINEMATIC FILM STRIP WITH REAL VIDEO PLAYBACK
+   Authentic 35mm Perforated Film Strip with Scroll-Linked Motion
+   & Real Interactive HTML5 / Embed Video Player
+---------------------------------------------------- */
+.section-films {
+    position: relative;
+    background-color: var(--bg-secondary, #350F10);
+    padding: 7rem 0;
+    overflow: hidden;
+    border-top: 1px solid var(--border-subtle, #704447);
+    border-bottom: 1px solid var(--border-subtle, #704447);
+}
+
+.films-header-wrapper {
+    max-width: 1400px;
+    margin: 0 auto 3.5rem auto;
+    padding: 0 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    z-index: 5;
+}
+
+.films-header-wrapper .section-title {
+    margin-top: 0.4rem;
+}
+
+/* ----------------------------------------------------
+   35mm CINEMATIC FILM STRIP REEL
+---------------------------------------------------- */
+.film-strip-viewport {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 2.5rem 0;
+    background: #0d0303;
+    box-shadow: inset 0 20px 40px rgba(0, 0, 0, 0.95), inset 0 -20px 40px rgba(0, 0, 0, 0.95);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Top and Bottom 35mm Sprocket Perforations */
+.film-strip-sprocket {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 18px;
+    z-index: 10;
+    background-color: #0d0303;
+    background-image: repeating-linear-gradient(
+        90deg,
+        #0d0303 0px,
+        #0d0303 14px,
+        #1c0707 14px,
+        #1c0707 32px
+    );
+    border-top: 1px solid rgba(112, 68, 71, 0.4);
+    border-bottom: 1px solid rgba(112, 68, 71, 0.4);
+    display: flex;
+    align-items: center;
+}
+
+.film-strip-sprocket::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 14px,
+        #000000 14px,
+        #000000 32px
+    );
+    opacity: 0.9;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.9);
+}
+
+.sprocket-top {
+    top: 0;
+}
+
+.sprocket-bottom {
+    bottom: 0;
+}
+
+/* Moving Film Track */
+.film-strip-track {
+    display: flex;
+    gap: 3.5rem;
+    padding: 1.5rem 4rem;
+    width: max-content;
+    will-change: transform;
+    align-items: center;
+}
+
+/* 35mm Film Frame Card */
+.film-frame-card {
+    position: relative;
+    width: min(620px, 82vw);
+    flex-shrink: 0;
+    background: #150505;
+    border-radius: 6px;
+    border: 2px solid rgba(112, 68, 71, 0.4);
+    box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.95),
+        0 5px 20px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(226, 184, 181, 0.15);
+    overflow: hidden;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+}
+
+.film-frame-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: var(--accent, #C98F91);
+    box-shadow: 
+        0 35px 80px rgba(0, 0, 0, 0.98),
+        0 0 35px rgba(201, 143, 145, 0.25);
+}
+
+/* Inner 16:9 Video Player / Thumbnail Stage */
+.film-player-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+}
+
+.film-frame-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9) contrast(1.05);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+.film-frame-card:hover .film-frame-thumb {
+    transform: scale(1.05);
+    filter: brightness(0.98);
+}
+
+/* Vintage Film Grain & Edge Light Vignette */
+.film-frame-grain {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 55%, rgba(13, 3, 3, 0.7) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Film Frame Number Badge */
+.film-frame-code {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    z-index: 4;
+    font-family: var(--font-sans, "Montserrat", sans-serif);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: var(--accent-light, #E2B8B5);
+    background: rgba(13, 3, 3, 0.75);
+    backdrop-filter: blur(6px);
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid rgba(112, 68, 71, 0.35);
+}
+
+/* Play Button Trigger */
+.film-play-trigger {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(26, 6, 6, 0.82);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(226, 184, 181, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F5F0EB;
+    z-index: 5;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+}
+
+.film-play-trigger svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    margin-left: 3px;
+    transition: transform 0.3s ease;
+}
+
+.film-frame-card:hover .film-play-trigger {
+    background: var(--accent, #C98F91);
+    color: #1A0606;
+    transform: translate(-50%, -50%) scale(1.14);
+    box-shadow: 0 0 30px rgba(201, 143, 145, 0.6);
+}
+
+.film-frame-card:hover .film-play-trigger svg {
+    transform: scale(1.15);
+}
+
+/* Active Inline Video Container */
+.film-active-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 3;
+    display: none;
+    background: #000;
+}
+
+.film-frame-card.is-playing .film-active-video {
+    display: block;
+}
+
+.film-frame-card.is-playing .film-frame-thumb,
+.film-frame-card.is-playing .film-play-trigger,
+.film-frame-card.is-playing .film-frame-grain {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Card Details Footer */
+.film-frame-footer {
+    padding: 1.8rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #110303;
+    border-top: 1px solid rgba(112, 68, 71, 0.3);
+}
+
+.film-frame-title {
+    font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+    font-size: 1.6rem;
+    color: #F5F0EB;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.film-frame-sub {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-secondary, #C9BDB6);
+}
+
+.film-badge-pill {
+    font-size: 0.7rem;
+    letter-spacing: 2.5px;
+    color: var(--accent, #C98F91);
+    border: 1px solid rgba(112, 68, 71, 0.4);
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+/* ----------------------------------------------------
+   LUXURY CINEMA VIDEO PLAYER MODAL WITH CONTROLS
+---------------------------------------------------- */
+.cinema-player-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 2, 2, 0.96);
+    backdrop-filter: blur(25px);
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.cinema-player-modal.is-active {
+    display: flex;
+    opacity: 1;
+}
+
+.cinema-player-stage {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border: 1px solid rgba(112, 68, 71, 0.5);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.98), 0 0 45px rgba(201, 143, 145, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.cinema-player-stage video,
+.cinema-player-stage iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* Close Cinema Button */
+.cinema-close-btn {
+    position: absolute;
+    top: -48px;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: #F5F0EB;
+    font-size: 2.2rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.cinema-close-btn:hover {
+    color: var(--accent, #C98F91);
+    transform: scale(1.15) rotate(90deg);
+}
+
+/* Custom Cinema Video Controls Bar */
+.cinema-controls-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(13, 3, 3, 0.95) 100%);
+    padding: 1.2rem 1.5rem 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cinema-player-stage:hover .cinema-controls-bar {
+    opacity: 1;
+}
+
+.cinema-btn {
+    background: transparent;
+    border: none;
+    color: #F5F0EB;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.cinema-btn:hover {
+    color: var(--accent, #C98F91);
+    transform: scale(1.1);
+}
+
+.cinema-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.cinema-timeline-progress {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.cinema-progress-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--accent, #C98F91);
+    border-radius: 4px;
+    transition: width 0.1s linear;
+}
+
+/* ----------------------------------------------------
+   RESPONSIVE DESIGN (MOBILE & TABLET)
+---------------------------------------------------- */
+@media (max-width: 1024px) {
+    .films-header-wrapper {
+        padding: 0 2.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.2rem;
+    }
+    .film-frame-card {
+        width: 75vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-films {
+        padding: 5rem 0;
+    }
+    .films-header-wrapper {
+        padding: 0 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .film-strip-track {
+        gap: 2rem;
+        padding: 1rem 1.5rem;
+    }
+    .film-frame-card {
+        width: 86vw;
+    }
+    .film-frame-footer {
+        padding: 1.2rem 1.4rem;
+    }
+    .film-frame-title {
+        font-size: 1.35rem;
+    }
+    .film-play-trigger {
+        width: 54px;
+        height: 54px;
+    }
+    .film-play-trigger svg {
+        width: 18px;
+        height: 18px;
+    }
+    .cinema-player-modal {
+        padding: 1rem;
+    }
+    .cinema-close-btn {
+        top: -40px;
+    }
+}

@@ -22,14 +22,35 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/holographic-gallery.css">
+    <link rel="stylesheet" href="css/volumetric-smoke.css">
     <link rel="stylesheet" href="css/cursor.css">
     <link rel="stylesheet" href="css/split-text.css">
     <link rel="stylesheet" href="css/stacked-cards.css">
     <link rel="stylesheet" href="css/curtain-reveal.css">
     <link rel="stylesheet" href="css/cube-gallery.css">
+    <link rel="stylesheet" href="css/liquid-text.css">
+    <link rel="stylesheet" href="css/site-intro.css">
+    <link rel="stylesheet" href="css/royal-doors.css">
+    <link rel="stylesheet" href="css/film-strip.css">
 </head>
 
 <body>
+
+    <!-- ----------------------------------------------------
+         ROYAL CINEMATIC INTRO POSTER (PLAYS ON SITE OPEN)
+    ---------------------------------------------------- -->
+    <div class="site-intro-loader" id="siteIntroLoader" aria-label="AAKAR FILMS Introduction">
+        <div class="intro-ambient-glow"></div>
+        <div class="intro-vignette"></div>
+
+        <div class="intro-stage-box">
+            <span class="intro-est-badge" id="introEst">EST. 2018</span>
+            <h1 class="intro-brand-title" id="introBrandTitle">AAKAR FILMS</h1>
+            <div class="intro-divider-wrap" id="introDivider"></div>
+            <p class="intro-tagline" id="introTagline">CAPTURING TIMELESS MOMENTS</p>
+        </div>
+    </div>
 
     <!-- ----------------------------------------------------
          SMOOTH TRAIL CURSOR CANVAS & DOT
@@ -66,23 +87,47 @@
     </header>
 
     <!-- ----------------------------------------------------
-         SECTION 1: HERO (CINEMATOGRAPHY VIDEO BACKGROUND)
+         SECTION 1: HERO (COLORFUL WEDDING CINEMATIC VIDEO BACKGROUND)
     ---------------------------------------------------- -->
     <section class="hero-section" id="home">
-        <!-- Cinematic Fullscreen Wedding Video Background with Poster Fallback -->
+        <!-- Cinematic Fullscreen Wedding Video Background with Colorful Powder -->
         <div class="hero-video-container">
             <video class="hero-bg-video" id="heroBgVideo" autoplay muted loop playsinline preload="auto"
                 poster="assets/videos/hero-poster.jpg" aria-hidden="true">
-                <source src="assets/videos/hero-wedding.mp4" type="video/mp4">
+                <source src="assets/videos/colorful-wedding-powder.mp4" type="video/mp4">
             </video>
         </div>
 
-        <!-- Luxury Dark Burgundy Overlay -->
+        <!-- Subtle Luxury Dark Burgundy Gradient Overlay (Keeps vibrant powder & couple visible) -->
         <div class="hero-overlay"></div>
+
+        <!-- SVG Filter Definitions for Liquid Text Morphing -->
+        <svg class="liquid-svg-defs" aria-hidden="true">
+            <defs>
+                <filter id="liquid-text-filter" x="-20%" y="-20%" width="140%" height="140%">
+                    <feTurbulence id="liquidTurbulence" type="fractalNoise" baseFrequency="0.02 0.04" numOctaves="2" result="turbulence" />
+                    <feDisplacementMap id="liquidDisplacement" in="SourceGraphic" in2="turbulence" scale="0" xChannelSelector="R" yChannelSelector="G" />
+                </filter>
+            </defs>
+        </svg>
 
         <div class="hero-content">
             <h1 class="hero-main-brand">AAKAR FILMS</h1>
-            <p class="hero-tagline">WE CAPTURE EMOTIONS, NOT JUST MOMENTS</p>
+
+            <!-- Cinematic Luxury Tagline -->
+            <p class="hero-tagline-quote">Where Every Moment Becomes a Memory</p>
+
+            <!-- Ultra-Premium Liquid Text Morphing Heading -->
+            <div class="liquid-text-container" id="liquidTextContainer" aria-live="polite">
+                <div class="liquid-text-wrapper" id="liquidTextWrapper">
+                    <h2 class="liquid-heading" data-index="0">CAPTURING LOVE</h2>
+                    <h2 class="liquid-heading" data-index="1">CREATING MEMORIES</h2>
+                    <h2 class="liquid-heading" data-index="2">FOREVER TOGETHER</h2>
+                    <h2 class="liquid-heading" data-index="3">TIMELESS STORIES</h2>
+                    <h2 class="liquid-heading" data-index="4">LOVE BEYOND FRAMES</h2>
+                </div>
+            </div>
+
             <p class="hero-subtext">Wedding Photography &amp; Cinematography</p>
             <a href="#weddings" class="btn-luxury">
                 <span>EXPLORE OUR STORIES</span>
@@ -285,12 +330,22 @@
     </section>
 
     <!-- ----------------------------------------------------
-         SECTION 3B: CATEGORY-WISE PHOTOGRAPHY GALLERY
+         SECTION 3B: CATEGORY-WISE PHOTOGRAPHY GALLERY (HOLOGRAPHIC PROJECTION EXPERIENCE)
     ---------------------------------------------------- -->
     <section class="section-category-gallery" id="gallerySection">
+        <!-- Holographic Projection Stage & Ambient Beam Effects -->
+        <div class="holo-stage-fx" aria-hidden="true">
+            <div class="holo-emitter-beam" id="holoEmitterBeam"></div>
+            <div class="holo-stage-grid"></div>
+            <div class="holo-ambient-radial"></div>
+            <canvas class="holo-particles-canvas" id="holoParticlesCanvas"></canvas>
+        </div>
+
         <div class="category-gallery-container">
             <div class="cat-gallery-header">
-                <span class="section-subhead">Visual Archive</span>
+                <span class="section-subhead holo-subhead">
+                    <span class="holo-pulse-dot"></span> 3D Holographic Projection Archive
+                </span>
                 <h2 class="section-title">THE PHOTOGRAPHY <em>COLLECTIONS</em></h2>
                 <p class="cat-gallery-desc">
                     Explore our curated royal celebrations across India and destinations worldwide. Select any collection to view our finest frames.
@@ -332,14 +387,16 @@
     </section>
 
     <!-- Fullscreen Photography Lightbox Modal -->
-    <div class="photo-lightbox-modal" id="photoLightbox" role="dialog" aria-modal="true" aria-label="Photo Lightbox">
+    <div class="photo-lightbox-modal holo-lightbox-modal" id="photoLightbox" role="dialog" aria-modal="true" aria-label="Photo Lightbox">
         <button class="lightbox-close-btn" id="lightboxClose" aria-label="Close Lightbox">&times;</button>
         <button class="lightbox-arrow-btn lightbox-prev" id="lightboxPrev" aria-label="Previous Photo">&#10094;</button>
         <button class="lightbox-arrow-btn lightbox-next" id="lightboxNext" aria-label="Next Photo">&#10095;</button>
         
-        <div class="lightbox-content-box">
-            <div class="lightbox-img-wrapper">
+        <div class="lightbox-content-box holo-lightbox-box">
+            <div class="lightbox-img-wrapper holo-lightbox-wrapper">
                 <img src="" alt="" id="lightboxImg">
+                <video src="" id="lightboxVideo" autoplay loop muted playsinline style="display:none;"></video>
+                <div class="holo-lightbox-sweep"></div>
             </div>
             <div class="lightbox-caption">
                 <span class="lightbox-cat-tag" id="lightboxCategory">Weddings</span>
@@ -349,6 +406,50 @@
             </div>
         </div>
     </div>
+
+    <!-- ----------------------------------------------------
+         SECTION 3C: VOLUMETRIC SMOKE REVEAL CINEMATIC VIDEO SECTION
+    ---------------------------------------------------- -->
+    <section class="section-smoke-reveal" id="volumetricSmokeSection" aria-label="Volumetric Smoke Reveal Video">
+        <div class="smoke-stage-pinned" id="smokeStage">
+            <!-- Atmospheric Dark Lighting & Ray Layers -->
+            <div class="smoke-ambient-vignette"></div>
+            <div class="smoke-light-rays"></div>
+            <div class="smoke-lens-glow" id="smokeLensGlow"></div>
+
+            <!-- Wedding Cinematic Video Viewport -->
+            <div class="smoke-video-viewport" id="smokeVideoViewport">
+                <video class="smoke-wedding-video" id="smokeWeddingVideo"
+                    src="assets/videos/hero-wedding.mp4"
+                    poster="assets/videos/hero-poster.jpg"
+                    autoplay loop muted playsinline preload="auto">
+                </video>
+                <div class="smoke-video-grain"></div>
+            </div>
+
+            <!-- Multi-layer Volumetric Smoke Canvases -->
+            <canvas class="smoke-canvas" id="smokeCanvas"></canvas>
+            <canvas class="smoke-particles-canvas" id="smokeParticlesCanvas"></canvas>
+
+            <!-- Scroll Hint -->
+            <div class="smoke-scroll-hint" id="smokeScrollHint">
+                <span>Scroll to Unveil</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="7 13 12 18 17 13"></polyline>
+                    <polyline points="7 6 12 11 17 6"></polyline>
+                </svg>
+            </div>
+
+            <!-- Animated Master Typography Overlay -->
+            <div class="smoke-text-stage" id="smokeTextStage">
+                <div class="smoke-subhead-pill" id="smokeSubhead">
+                    <span class="smoke-pill-dot"></span> Cinematic Wedding Film
+                </div>
+                <h2 class="smoke-main-title" id="smokeMainTitle">BEYOND THE MOMENTS</h2>
+                <p class="smoke-tagline" id="smokeTagline">Every Love Story Deserves To Be Remembered.</p>
+            </div>
+        </div>
+    </section>
 
     <!-- ----------------------------------------------------
          SECTION 4: GSAP CIRCULAR IMAGE MASK REVEAL (4-PHOTO MULTI-LAYER)
@@ -380,8 +481,8 @@
             <!-- Initial circular guidance prompt -->
             <div class="mask-initial-prompt" id="maskPrompt">
                 <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-                    <circle cx="30" cy="30" r="28" stroke="#D8C4BA" stroke-width="1.5" stroke-dasharray="4 4" />
-                    <circle cx="30" cy="30" r="8" fill="#B99A85" />
+                    <circle cx="30" cy="30" r="28" stroke="#C9BDB6" stroke-width="1.5" stroke-dasharray="4 4" />
+                    <circle cx="30" cy="30" r="8" fill="#C98F91" />
                 </svg>
                 <span>Scroll to Reveal</span>
             </div>
@@ -677,113 +778,140 @@
     </section>
 
     <!-- ----------------------------------------------------
-         SECTION 5: OUR FILMS (CINEMATOGRAPHY)
+         SECTION 5: OUR FILMS (CINEMATIC 35mm FILM STRIP & REAL VIDEO PLAYBACK)
     ---------------------------------------------------- -->
     <section class="section-films" id="films">
-        <div class="films-container">
-            <div class="films-header">
-                <div>
-                    <span class="section-subhead">Cinematography</span>
-                    <h2 class="section-title">LOVE STORIES IN MOTION</h2>
-                </div>
-                <p style="color: var(--text-secondary); max-width: 400px; font-size: 0.9rem;">
-                    Shot with cinema-grade optics and graded with custom royal color palettes. Click to experience each
-                    film.
-                </p>
+        <div class="films-header-wrapper">
+            <div>
+                <span class="section-subhead">Cinematography</span>
+                <h2 class="section-title">LOVE STORIES IN MOTION</h2>
             </div>
+            <p style="color: var(--text-secondary); max-width: 440px; font-size: 0.9rem; line-height: 1.7;">
+                Shot with cinema-grade optics and graded with custom royal color palettes. Click any film frame below to watch the authentic wedding film.
+            </p>
+        </div>
 
-            <div class="films-grid">
-                <!-- Film 1 -->
-                <div class="film-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
-                    <div class="film-thumbnail-wrapper">
+        <!-- 35mm Cinematic Horizontal Film Strip Viewport -->
+        <div class="film-strip-viewport" id="filmStripViewport">
+            <!-- Top 35mm Perforated Sprocket Holes -->
+            <div class="film-strip-sprocket sprocket-top" aria-hidden="true"></div>
+
+            <!-- Horizontal Moving Film Strip Track -->
+            <div class="film-strip-track" id="filmStripTrack">
+
+                <!-- Film Frame 1: Aarav & Diya (Real Wedding 4K Local Video) -->
+                <article class="film-frame-card" data-video="assets/videos/hero-wedding.mp4" data-embed="false" tabindex="0" role="button" aria-label="Watch Aarav and Diya Wedding Film">
+                    <div class="film-player-box">
+                        <span class="film-frame-code">35mm &bull; FRAME 01</span>
                         <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200&auto=format&fit=crop"
-                            alt="Aarav and Diya - Udaipur">
-                        <div class="play-button-btn">
-                            <svg viewBox="0 0 24 24">
-                                <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
+                            alt="Aarav and Diya - Udaipur Royal Wedding" class="film-frame-thumb" loading="lazy">
+                        <div class="film-frame-grain"></div>
+                        <div class="film-play-trigger">
+                            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                         </div>
                     </div>
-                    <div class="film-details">
-                        <div class="film-info">
-                            <h3>Aarav &amp; Diya</h3>
-                            <p>The Palace of Udaipur / Gujarati Wedding</p>
+                    <div class="film-frame-footer">
+                        <div class="film-frame-info">
+                            <h3 class="film-frame-title">Aarav &amp; Diya</h3>
+                            <p class="film-frame-sub">The Palace of Udaipur &bull; Gujarati Heritage</p>
                         </div>
-                        <span class="film-duration">4K CINEMA</span>
+                        <span class="film-badge-pill">4K CINEMA</span>
                     </div>
-                </div>
+                </article>
 
-                <!-- Film 2 -->
-                <div class="film-card" data-video="https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1">
-                    <div class="film-thumbnail-wrapper">
+                <!-- Film Frame 2: Kabir & Ananya (Jaipur Royal Wedding) -->
+                <article class="film-frame-card" data-video="https://www.youtube.com/embed/L_LUpnjgPso" data-embed="true" tabindex="0" role="button" aria-label="Watch Kabir and Ananya Wedding Film">
+                    <div class="film-player-box">
+                        <span class="film-frame-code">35mm &bull; FRAME 02</span>
                         <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1200&auto=format&fit=crop"
-                            alt="Kabir and Ananya - Jaipur">
-                        <div class="play-button-btn">
-                            <svg viewBox="0 0 24 24">
-                                <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
+                            alt="Kabir and Ananya - Jaipur Royal Wedding" class="film-frame-thumb" loading="lazy">
+                        <div class="film-frame-grain"></div>
+                        <div class="film-play-trigger">
+                            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                         </div>
                     </div>
-                    <div class="film-details">
-                        <div class="film-info">
-                            <h3>Kabir &amp; Ananya</h3>
-                            <p>Jai Mahal Palace / Jaipur Royal Wedding</p>
+                    <div class="film-frame-footer">
+                        <div class="film-frame-info">
+                            <h3 class="film-frame-title">Kabir &amp; Ananya</h3>
+                            <p class="film-frame-sub">Jai Mahal Palace &bull; Jaipur Royal Wedding</p>
                         </div>
-                        <span class="film-duration">4K CINEMA</span>
+                        <span class="film-badge-pill">4K CINEMA</span>
                     </div>
-                </div>
+                </article>
 
-                <!-- Film 3 -->
-                <div class="film-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
-                    <div class="film-thumbnail-wrapper">
+                <!-- Film Frame 3: Rohan & Meera (Goa Cliffside Twilight) -->
+                <article class="film-frame-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" data-embed="true" tabindex="0" role="button" aria-label="Watch Rohan and Meera Wedding Film">
+                    <div class="film-player-box">
+                        <span class="film-frame-code">35mm &bull; FRAME 03</span>
                         <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop"
-                            alt="Rohan and Meera - Goa">
-                        <div class="play-button-btn">
-                            <svg viewBox="0 0 24 24">
-                                <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
+                            alt="Rohan and Meera - Goa Destination" class="film-frame-thumb" loading="lazy">
+                        <div class="film-frame-grain"></div>
+                        <div class="film-play-trigger">
+                            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                         </div>
                     </div>
-                    <div class="film-details">
-                        <div class="film-info">
-                            <h3>Rohan &amp; Meera</h3>
-                            <p>Cliffside Twilight / Goa Destination</p>
+                    <div class="film-frame-footer">
+                        <div class="film-frame-info">
+                            <h3 class="film-frame-title">Rohan &amp; Meera</h3>
+                            <p class="film-frame-sub">Cliffside Twilight &bull; Goa Destination</p>
                         </div>
-                        <span class="film-duration">4K CINEMA</span>
+                        <span class="film-badge-pill">4K CINEMA</span>
                     </div>
-                </div>
+                </article>
 
-                <!-- Film 4 -->
-                <div class="film-card" data-video="https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1">
-                    <div class="film-thumbnail-wrapper">
+                <!-- Film Frame 4: Dev & Priya (Heritage Haveli Ahmedabad) -->
+                <article class="film-frame-card" data-video="assets/videos/hero-wedding.mp4" data-embed="false" tabindex="0" role="button" aria-label="Watch Dev and Priya Wedding Film">
+                    <div class="film-player-box">
+                        <span class="film-frame-code">35mm &bull; FRAME 04</span>
                         <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1200&auto=format&fit=crop"
-                            alt="Dev and Priya - Ahmedabad">
-                        <div class="play-button-btn">
-                            <svg viewBox="0 0 24 24">
-                                <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
+                            alt="Dev and Priya - Heritage Haveli Ahmedabad" class="film-frame-thumb" loading="lazy">
+                        <div class="film-frame-grain"></div>
+                        <div class="film-play-trigger">
+                            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                         </div>
                     </div>
-                    <div class="film-details">
-                        <div class="film-info">
-                            <h3>Dev &amp; Priya</h3>
-                            <p>Heritage Haveli / Ahmedabad</p>
+                    <div class="film-frame-footer">
+                        <div class="film-frame-info">
+                            <h3 class="film-frame-title">Dev &amp; Priya</h3>
+                            <p class="film-frame-sub">Heritage Haveli &bull; Ahmedabad Royal</p>
                         </div>
-                        <span class="film-duration">4K CINEMA</span>
+                        <span class="film-badge-pill">4K CINEMA</span>
                     </div>
-                </div>
+                </article>
+
             </div>
+
+            <!-- Bottom 35mm Perforated Sprocket Holes -->
+            <div class="film-strip-sprocket sprocket-bottom" aria-hidden="true"></div>
         </div>
     </section>
 
-
-    <!-- Video Modal Player -->
-    <div class="video-modal" id="videoModal">
-        <div class="modal-inner">
-            <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
-            <iframe id="videoIframe" src=""
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
+    <!-- Luxury Interactive Cinema Player Modal -->
+    <div class="cinema-player-modal" id="cinemaPlayerModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Wedding Cinema Player">
+        <div class="cinema-player-stage">
+            <button class="cinema-close-btn" id="cinemaCloseBtn" aria-label="Close Cinema Player">&times;</button>
+            
+            <!-- Real HTML5 Video Player for MP4 files -->
+            <video id="cinemaNativeVideo" playsinline preload="metadata"></video>
+            
+            <!-- Embed Iframe for YouTube/Vimeo streams -->
+            <iframe id="cinemaEmbedIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            
+            <!-- Custom Cinema Controls Bar -->
+            <div class="cinema-controls-bar">
+                <button class="cinema-btn" id="cinemaPlayPauseBtn" aria-label="Play/Pause">
+                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </button>
+                <div class="cinema-timeline-progress" id="cinemaProgressBar" aria-label="Video Progress Scrubber">
+                    <div class="cinema-progress-filled" id="cinemaProgressFill"></div>
+                </div>
+                <button class="cinema-btn" id="cinemaMuteBtn" aria-label="Mute/Unmute">
+                    <svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
+                <button class="cinema-btn" id="cinemaFullscreenBtn" aria-label="Toggle Fullscreen">
+                    <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -791,6 +919,99 @@
          SECTION 6: CONTACT & BOOKING
     ---------------------------------------------------- -->
     <section class="section-contact" id="contact">
+        <!-- Royal Antique Double Doors 3D Viewport Overlay -->
+        <div class="royal-doors-viewport" id="royalDoorsViewport" aria-hidden="true">
+            <!-- Center Seam Golden Light Beam -->
+            <div class="doors-center-light" id="doorsCenterLight"></div>
+
+            <!-- Top Architrave / Palace Arch Beam -->
+            <div class="doors-arch-frame"></div>
+
+            <!-- Left Royal Door Leaf -->
+            <div class="royal-door-leaf royal-door-left" id="royalDoorLeft">
+                <div class="door-panel-artwork">
+                    <div class="door-corner corner-tl"></div>
+                    <div class="door-corner corner-tr"></div>
+                    <div class="door-corner corner-bl"></div>
+                    <div class="door-corner corner-br"></div>
+
+                    <div class="door-carving-top">
+                        <span>Royal Haveli Sanctuary</span>
+                    </div>
+
+                    <div class="door-carving-center">
+                        <svg class="door-mandala-svg" viewBox="0 0 100 100" fill="currentColor">
+                            <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3" />
+                            <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" stroke-width="2" />
+                            <circle cx="50" cy="50" r="8" fill="currentColor" />
+                            <path d="M50 8 Q56 28 50 42 Q44 28 50 8 Z" fill="currentColor" opacity="0.8" />
+                            <path d="M50 92 Q56 72 50 58 Q44 72 50 92 Z" fill="currentColor" opacity="0.8" />
+                            <path d="M8 50 Q28 56 42 50 Q28 44 8 50 Z" fill="currentColor" opacity="0.8" />
+                            <path d="M92 50 Q72 56 58 50 Q72 44 92 50 Z" fill="currentColor" opacity="0.8" />
+                            <path d="M20 20 Q38 32 44 44 Q32 38 20 20 Z" fill="currentColor" opacity="0.7" />
+                            <path d="M80 80 Q62 68 56 56 Q68 62 80 80 Z" fill="currentColor" opacity="0.7" />
+                            <path d="M80 20 Q68 38 56 44 Q62 32 80 20 Z" fill="currentColor" opacity="0.7" />
+                            <path d="M20 80 Q32 62 44 56 Q38 68 20 80 Z" fill="currentColor" opacity="0.7" />
+                        </svg>
+
+                        <!-- Brass Knocker Assembly -->
+                        <div class="door-handle-assembly">
+                            <div class="door-knocker-ring"></div>
+                        </div>
+                    </div>
+
+                    <div class="door-carving-bottom">
+                        <div class="door-stud"></div>
+                        <div class="door-stud"></div>
+                        <div class="door-stud"></div>
+                        <div class="door-stud"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Royal Door Leaf -->
+            <div class="royal-door-leaf royal-door-right" id="royalDoorRight">
+                <div class="door-panel-artwork">
+                    <div class="door-corner corner-tl"></div>
+                    <div class="door-corner corner-tr"></div>
+                    <div class="door-corner corner-bl"></div>
+                    <div class="door-corner corner-br"></div>
+
+                    <div class="door-carving-top">
+                        <span>Aakar Heritage Gates</span>
+                    </div>
+
+                    <div class="door-carving-center">
+                        <svg class="door-mandala-svg" viewBox="0 0 100 100" fill="currentColor">
+                            <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3" />
+                            <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" stroke-width="2" />
+                            <circle cx="50" cy="50" r="8" fill="currentColor" />
+                            <path d="M50 8 Q56 28 50 42 Q44 28 50 8 Z" fill="currentColor" opacity="0.8" />
+                            <path d="M50 92 Q56 72 50 58 Q44 72 50 92 Z" fill="currentColor" opacity="0.8" />
+                            <path d="M8 50 Q28 56 42 50 Q28 44 8 50 Z" fill="currentColor" opacity="0.8" />
+                            <path d="M92 50 Q72 56 58 50 Q72 44 92 50 Z" fill="currentColor" opacity="0.8" />
+                            <path d="M20 20 Q38 32 44 44 Q32 38 20 20 Z" fill="currentColor" opacity="0.7" />
+                            <path d="M80 80 Q62 68 56 56 Q68 62 80 80 Z" fill="currentColor" opacity="0.7" />
+                            <path d="M80 20 Q68 38 56 44 Q62 32 80 20 Z" fill="currentColor" opacity="0.7" />
+                            <path d="M20 80 Q32 62 44 56 Q38 68 20 80 Z" fill="currentColor" opacity="0.7" />
+                        </svg>
+
+                        <!-- Brass Knocker Assembly -->
+                        <div class="door-handle-assembly">
+                            <div class="door-knocker-ring"></div>
+                        </div>
+                    </div>
+
+                    <div class="door-carving-bottom">
+                        <div class="door-stud"></div>
+                        <div class="door-stud"></div>
+                        <div class="door-stud"></div>
+                        <div class="door-stud"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="contact-container">
             <div class="contact-left">
                 <span class="section-subhead">Inquire Availability</span>
@@ -922,8 +1143,13 @@
     <script src="js/split-text.js"></script>
     <script src="js/stacked-cards.js"></script>
     <script src="js/perspective-gallery.js"></script>
+    <script src="js/volumetric-smoke.js"></script>
     <script src="js/curtain-reveal.js"></script>
     <script src="js/cube-gallery.js"></script>
+    <script src="js/liquid-text.js"></script>
+    <script src="js/site-intro.js"></script>
+    <script src="js/royal-doors.js"></script>
+    <script src="js/film-strip.js"></script>
 </body>
 
 </html>

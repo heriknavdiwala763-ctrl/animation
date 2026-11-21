@@ -1,0 +1,122 @@
+/* ----------------------------------------------------
+   AAKAR FILMS - LIQUID TEXT MORPHING ANIMATION
+   Ultra-luxury liquid typography with SVG displacement,
+   viscous fluid blur & champagne-gold glow
+---------------------------------------------------- */
+.liquid-text-container {
+    position: relative;
+    width: 100%;
+    min-height: clamp(52px, 8vw, 84px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.8rem;
+    margin-bottom: 0.6rem;
+    perspective: 1000px;
+}
+
+.liquid-text-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Apply SVG liquid filter */
+    filter: url(#liquid-text-filter);
+    -webkit-filter: url(#liquid-text-filter);
+    will-change: filter, transform;
+}
+
+/* Base style for morphing headings */
+.liquid-heading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: max-content;
+    max-width: 95vw;
+    margin: 0;
+    padding: 0 0.5rem;
+    text-align: center;
+    font-family: var(--font-display, "Playfair Display", Georgia, serif);
+    font-size: clamp(1.4rem, 3.4vw, 2.7rem);
+    font-weight: 600;
+    letter-spacing: clamp(4px, 1vw, 8px);
+    line-height: 1.25;
+    text-transform: uppercase;
+    color: #F5F0EB;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+    opacity: 0;
+    will-change: opacity, filter, transform;
+    /* Subtle luxury dual text shadow */
+    text-shadow: 
+        0 2px 14px rgba(0, 0, 0, 0.95),
+        0 0 24px rgba(201, 143, 145, 0.28);
+}
+
+/* Subtle champagne-gold gradient glow on text */
+.liquid-heading::after {
+    content: '';
+    position: absolute;
+    inset: -5px -10px;
+    background: radial-gradient(ellipse at center, rgba(201, 143, 145, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Invisible helper SVG holder */
+.liquid-svg-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* Fallback & Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .liquid-text-wrapper {
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+    .liquid-heading {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        opacity: 1 !important;
+        display: none;
+    }
+    .liquid-heading:first-child {
+        display: block !important;
+    }
+}
+
+/* Responsive Scaling */
+@media (max-width: 768px) {
+    .liquid-text-container {
+        min-height: 48px;
+        margin-top: 0.6rem;
+        margin-bottom: 0.4rem;
+    }
+    .liquid-heading {
+        font-size: clamp(1.2rem, 4.6vw, 1.75rem);
+        letter-spacing: 3px;
+        white-space: normal;
+        max-width: 90vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .liquid-text-container {
+        min-height: 44px;
+    }
+    .liquid-heading {
+        font-size: 1.18rem;
+        letter-spacing: 2.2px;
+    }
+}

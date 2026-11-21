@@ -1,0 +1,138 @@
+/* ----------------------------------------------------
+   AAKAR FILMS - ROYAL CINEMATIC INTRO REVEAL LOADER
+   Plays once on site entrance with Burgundy Theme
+---------------------------------------------------- */
+.site-intro-loader {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100svh;
+    background-color: #240908;
+    background: radial-gradient(circle at center, #350F10 0%, #260707 50%, #1A0606 100%);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-intro-loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Luxury ambient backlight */
+.intro-ambient-glow {
+    position: absolute;
+    width: min(600px, 90vw);
+    height: min(600px, 90vw);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201, 143, 145, 0.15) 0%, rgba(59, 16, 16, 0.4) 50%, transparent 70%);
+    filter: blur(50px);
+    pointer-events: none;
+    animation: introGlowPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes introGlowPulse {
+    0% { transform: scale(0.9); opacity: 0.6; }
+    100% { transform: scale(1.15); opacity: 1; }
+}
+
+/* Master Logo Stage */
+.intro-stage-box {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    max-width: 900px;
+}
+
+/* EST. 2018 */
+.intro-est-badge {
+    font-family: var(--font-sans, "Montserrat", sans-serif);
+    font-size: clamp(0.72rem, 1.4vw, 0.88rem);
+    letter-spacing: clamp(5px, 1.2vw, 8px);
+    text-transform: uppercase;
+    color: #C98F91;
+    font-weight: 500;
+    margin-bottom: 1.4rem;
+    opacity: 0;
+    transform: translateY(12px);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* AAKAR FILMS Master Typography */
+.intro-brand-title {
+    font-family: var(--font-display, "Playfair Display", Georgia, serif);
+    font-size: clamp(2.4rem, 6vw, 5.2rem);
+    font-weight: 400;
+    letter-spacing: clamp(6px, 1.6vw, 14px);
+    text-transform: uppercase;
+    color: #F5F0EB;
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    transform: scale(0.94);
+    text-shadow: 
+        0 4px 30px rgba(0, 0, 0, 0.95),
+        0 0 40px rgba(201, 143, 145, 0.25);
+}
+
+/* Royal Divider Line with expanding rose glow */
+.intro-divider-wrap {
+    position: relative;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #C98F91 25%, #E2B8B5 50%, #C98F91 75%, transparent 100%);
+    box-shadow: 0 0 14px rgba(201, 143, 145, 0.6);
+    margin: 1.6rem 0 1.5rem 0;
+    opacity: 0;
+}
+
+/* CAPTURING TIMELESS MOMENTS */
+.intro-tagline {
+    font-family: var(--font-sans, "Montserrat", sans-serif);
+    font-size: clamp(0.68rem, 1.2vw, 0.85rem);
+    letter-spacing: clamp(4px, 1vw, 7px);
+    text-transform: uppercase;
+    color: #C9BDB6;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(-10px);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Fine-art Vignette Corners */
+.intro-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 40%, rgba(16, 3, 3, 0.85) 100%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+@media (max-width: 480px) {
+    .intro-brand-title {
+        letter-spacing: 5px;
+    }
+    .intro-est-badge {
+        letter-spacing: 4px;
+        margin-bottom: 1rem;
+    }
+    .intro-tagline {
+        letter-spacing: 3px;
+    }
+    .intro-divider-wrap {
+        margin: 1.2rem 0;
+    }
+}

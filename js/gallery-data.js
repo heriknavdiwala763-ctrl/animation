@@ -19,6 +19,8 @@ const GALLERY_DATA = [
         category: "weddings",
         categoryLabel: "Weddings",
         image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=85&w=1600&auto=format&fit=crop",
+        video: "assets/videos/hero-wedding.mp4",
+        isVideo: true,
         aspect: "tall",
         description: "Regal Gujarati wedding rituals captured in traditional splendor.",
         featured: true
@@ -81,6 +83,8 @@ const GALLERY_DATA = [
         category: "pre-wedding",
         categoryLabel: "Pre-Wedding",
         image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=85&w=1600&auto=format&fit=crop",
+        video: "assets/videos/colorful-wedding-powder.mp4",
+        isVideo: true,
         aspect: "wide",
         description: "Twilight romance along the serene waters of Lake Pichola.",
         featured: true
@@ -155,6 +159,8 @@ const GALLERY_DATA = [
         category: "haldi-mehndi",
         categoryLabel: "Haldi & Mehndi",
         image: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?q=85&w=1600&auto=format&fit=crop",
+        video: "assets/videos/colorful-wedding-powder.mp4",
+        isVideo: true,
         aspect: "tall",
         description: "Intricate bridal henna designs and joyful celebrations.",
         featured: true

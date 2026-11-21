@@ -1,0 +1,244 @@
+/* ----------------------------------------------------
+   AAKAR FILMS - IMMERSIVE CINEMATIC VIDEO & CAMERA SYSTEM
+   Inspired by Luxury Film Studios:
+   - Dynamic 3-Scene Video Transition with Ambient Soundscapes
+   - Cinematic Camera Push-In / Pull-Out Optical Zooms
+   - Cinematic Letterbox / Scope Aspect Masking
+   - Scene Progress Indicators & Scene Meta Information
+   - Smooth Parallax Camera Glides
+---------------------------------------------------- */
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background-color: var(--bg-primary, #240908);
+}
+
+/* Master Fullscreen Video Container */
+.hero-video-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Multi-Scene Video Layer */
+.hero-scene-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: 100vw;
+    height: 100vh;
+    height: 100svh;
+    object-fit: cover;
+    transform: translate(-50%, -50%) scale(1.05);
+    filter: brightness(0.68) contrast(1.1) saturate(1.12);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1), transform 12s cubic-bezier(0.1, 0, 0.2, 1), filter 1.8s ease;
+    will-change: transform, opacity, filter;
+    pointer-events: none;
+}
+
+.hero-scene-video.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1.15); /* Slow Cinematic Push-in */
+}
+
+/* Cinematic Multi-Layer Vignette & Color Grade Overlay */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background: 
+        radial-gradient(ellipse at center, rgba(36, 9, 8, 0.25) 0%, rgba(26, 6, 6, 0.65) 70%, rgba(13, 3, 3, 0.92) 100%),
+        linear-gradient(180deg, rgba(26, 6, 6, 0.6) 0%, transparent 40%, rgba(36, 9, 8, 0.35) 70%, var(--bg-primary, #240908) 100%);
+    pointer-events: none;
+}
+
+/* 2.39:1 Anamorphic Cinema Scope Letterbox Bars */
+.hero-cinema-scope {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: clamp(14px, 2.5vw, 36px);
+    background: #0d0202;
+    z-index: 8;
+    pointer-events: none;
+    transition: height 0.6s ease;
+}
+
+.scope-top {
+    top: 0;
+    border-bottom: 1px solid rgba(112, 68, 71, 0.25);
+}
+
+.scope-bottom {
+    bottom: 0;
+    border-top: 1px solid rgba(112, 68, 71, 0.25);
+}
+
+/* Active Scene Meta Badge at Top Corner */
+.hero-scene-badge {
+    position: absolute;
+    top: clamp(2.8rem, 5vw, 4rem);
+    left: clamp(1.5rem, 4vw, 4rem);
+    z-index: 12;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.45rem 1.1rem;
+    background: rgba(22, 5, 5, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(112, 68, 71, 0.45);
+    border-radius: 30px;
+    color: var(--accent-light, #E2B8B5);
+    font-size: 0.68rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.scene-rec-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ff4757;
+    box-shadow: 0 0 10px #ff4757;
+    animation: recBlink 1.8s infinite;
+}
+
+@keyframes recBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+}
+
+/* Cinematic Audio Atmosphere Toggle at Top Right */
+.hero-audio-toggle {
+    position: absolute;
+    top: clamp(2.8rem, 5vw, 4rem);
+    right: clamp(1.5rem, 4vw, 4rem);
+    z-index: 12;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 1rem;
+    background: rgba(22, 5, 5, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(112, 68, 71, 0.45);
+    border-radius: 30px;
+    color: var(--text-secondary, #C9BDB6);
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.hero-audio-toggle:hover {
+    color: #FFFFFF;
+    border-color: var(--accent, #C98F91);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201, 143, 145, 0.25);
+}
+
+.hero-audio-toggle svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+/* Scene Timeline Dots Navigation at Bottom */
+.hero-scene-nav {
+    position: absolute;
+    bottom: clamp(2.4rem, 4vw, 3.8rem);
+    z-index: 12;
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+}
+
+.scene-dot-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted, #8E7A77);
+    font-family: var(--font-sans, "Montserrat", sans-serif);
+    font-size: 0.68rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    padding: 0.4rem 0.6rem;
+}
+
+.scene-dot-line {
+    width: 24px;
+    height: 2px;
+    background: rgba(112, 68, 71, 0.5);
+    border-radius: 2px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scene-dot-item:hover,
+.scene-dot-item.is-active {
+    color: #F5F0EB;
+}
+
+.scene-dot-item.is-active .scene-dot-line {
+    width: 45px;
+    background: var(--accent, #C98F91);
+    box-shadow: 0 0 12px rgba(201, 143, 145, 0.6);
+}
+
+/* ----------------------------------------------------
+   RESPONSIVE DESIGN (TABLETS & MOBILE)
+---------------------------------------------------- */
+@media (max-width: 768px) {
+    .hero-scene-badge {
+        top: 5rem;
+        left: 1.2rem;
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+        padding: 0.35rem 0.8rem;
+    }
+    .hero-audio-toggle {
+        top: 5rem;
+        right: 1.2rem;
+        font-size: 0.6rem;
+        letter-spacing: 1.5px;
+        padding: 0.35rem 0.8rem;
+    }
+    .hero-scene-nav {
+        bottom: 1.6rem;
+        gap: 0.8rem;
+    }
+    .scene-dot-item span {
+        display: none; /* Hide label on small phones, show clean lines */
+    }
+    .scene-dot-line {
+        width: 18px;
+    }
+    .scene-dot-item.is-active .scene-dot-line {
+        width: 32px;
+    }
+}

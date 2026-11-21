@@ -4,12 +4,12 @@
 .section-stacked-cards {
     position: relative;
     width: 100%;
-    background-color: var(--bg-primary);
-    background: radial-gradient(circle at center, #2e0c0c 0%, var(--bg-dark) 100%);
+    background-color: #240908;
+    background: radial-gradient(circle at center, #350F10 0%, #1A0606 100%);
     overflow: hidden;
     padding: 7rem 2rem 5rem 2rem;
-    border-top: 1px solid rgba(185, 154, 133, 0.15);
-    border-bottom: 1px solid rgba(185, 154, 133, 0.15);
+    border-top: 1px solid rgba(112, 68, 71, 0.15);
+    border-bottom: 1px solid rgba(112, 68, 71, 0.15);
 }
 
 .stacked-cards-container {
@@ -32,7 +32,7 @@
     font-size: 0.75rem;
     letter-spacing: 5px;
     text-transform: uppercase;
-    color: var(--accent);
+    color: #C98F91;
     margin-bottom: 0.8rem;
     display: inline-block;
     font-weight: 600;
@@ -42,7 +42,7 @@
     font-family: var(--font-serif);
     font-size: clamp(2.3rem, 4.5vw, 3.8rem);
     line-height: 1.15;
-    color: var(--text-main);
+    color: #F5F0EB;
     font-weight: 500;
     margin-bottom: 0.8rem;
 }
@@ -51,7 +51,7 @@
     font-size: 0.95rem;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--accent-light);
+    color: #E2B8B5;
     font-weight: 300;
 }
 
@@ -83,7 +83,7 @@
     transform-style: preserve-3d;
     transform-origin: 50% 50%;
     /* Realistic Physical Photo Border & Depth Shadow */
-    border: 1px solid rgba(185, 154, 133, 0.3);
+    border: 1px solid rgba(112, 68, 71, 0.3);
     box-shadow: 
         0 30px 70px rgba(0, 0, 0, 0.85),
         0 10px 25px rgba(0, 0, 0, 0.6),
@@ -92,10 +92,10 @@
 }
 
 .stacked-card:hover {
-    border-color: rgba(207, 168, 120, 0.7);
+    border-color: rgba(201, 143, 145, 0.7);
     box-shadow: 
         0 40px 90px rgba(0, 0, 0, 0.95),
-        0 15px 35px rgba(207, 168, 120, 0.2),
+        0 15px 35px rgba(201, 143, 145, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
@@ -150,10 +150,10 @@
     font-size: 0.68rem;
     letter-spacing: 3.5px;
     text-transform: uppercase;
-    color: var(--accent-gold);
+    color: #C98F91;
     background: rgba(29, 8, 8, 0.7);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(185, 154, 133, 0.35);
+    border: 1px solid rgba(112, 68, 71, 0.35);
     padding: 0.45rem 1.2rem;
     border-radius: 30px;
     font-weight: 600;
@@ -193,7 +193,7 @@
 .stacked-progress-num {
     font-size: 0.75rem;
     letter-spacing: 3px;
-    color: var(--accent);
+    color: #C98F91;
     font-family: var(--font-sans);
     font-weight: 500;
 }
@@ -201,7 +201,7 @@
 .stacked-progress-bar {
     width: 160px;
     height: 2px;
-    background: rgba(185, 154, 133, 0.25);
+    background: rgba(112, 68, 71, 0.25);
     border-radius: 2px;
     overflow: hidden;
     position: relative;
@@ -213,7 +213,7 @@
     left: 0;
     height: 100%;
     width: 20%;
-    background: var(--accent-gold);
+    background: #C98F91;
     transition: width 0.3s ease;
 }
 
