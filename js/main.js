@@ -108,7 +108,7 @@
         const colRight = document.getElementById('galleryColRight');
 
         ScrollTrigger.matchMedia({
-            // Desktop & Large Tablet
+            // Desktop & Large Tablet (> 768px): Signature reverse kinetic scroll
             "(min-width: 769px)": function () {
                 gsap.set(colLeft, { y: 60, force3D: true });
                 gsap.set(colCenter, { y: -620, force3D: true }); // Buffered high so top never empties
@@ -147,29 +147,53 @@
                 };
             },
 
-            // Mobile Adaptive View: Elegant vertical staggered parallax on touch scroll
+            // Mobile & Touch Devices (<= 768px): Full 3-Column Reverse Kinetic Scroll
             "(max-width: 768px)": function () {
-                gsap.set([colLeft, colCenter, colRight], { clearProps: "all" });
+                // Initial positions for mobile 3-column opposite trajectories
+                gsap.set(colLeft, { y: 20, force3D: true });
+                gsap.set(colCenter, { y: -380, force3D: true }); // Buffered higher so center flows down seamlessly
+                gsap.set(colRight, { y: 40, force3D: true });
 
-                // Gentle mobile parallax on columns as user scrolls down
-                const mobileTimeline = gsap.timeline({
+                const mobileGalleryTimeline = gsap.timeline({
                     scrollTrigger: {
                         trigger: gallerySection,
-                        start: "top 90%",
-                        end: "bottom 10%",
-                        scrub: 1
+                        start: "top top",
+                        end: "+=140%",
+                        scrub: 0.7,
+                        pin: true,
+                        anticipatePin: 1,
+                        invalidateOnRefresh: true
                     }
                 });
 
-                mobileTimeline
-                    .to(colLeft, { y: -40, ease: "none" }, 0)
-                    .to(colCenter, { y: 30, ease: "none" }, 0)
-                    .to(colRight, { y: -40, ease: "none" }, 0);
+                mobileGalleryTimeline
+                    .to(colLeft, {
+                        y: -220,
+                        force3D: true,
+                        ease: "none"
+                    }, 0)
+                    .to(colCenter, {
+                        y: 60,   // Center column flows DOWNWARDS in opposite direction
+                        force3D: true,
+                        ease: "none"
+                    }, 0)
+                    .to(colRight, {
+                        y: -180,
+                        force3D: true,
+                        ease: "none"
+                    }, 0);
 
                 return () => {
-                    mobileTimeline.kill();
+                    mobileGalleryTimeline.kill();
                     gsap.set([colLeft, colCenter, colRight], { clearProps: "all" });
                 };
+            }
+        });
+
+        // Recalculate ScrollTrigger on image loads and window orientation/resize
+        window.addEventListener("load", () => {
+            if (typeof ScrollTrigger !== "undefined") {
+                ScrollTrigger.refresh();
             }
         });
 

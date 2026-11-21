@@ -1346,35 +1346,100 @@
 
             /* ----------------------------------------------------
                MOBILE THREE-COLUMN REVERSE SCROLL ADAPTATION
+               Maintains authentic 3-column reverse kinetic layout
+               with compact, clear aspect ratios & reduced vertical padding
             ---------------------------------------------------- */
+            .section-gallery {
+                padding: 4rem 0 5rem 0;
+            }
+
+            .gallery-header {
+                margin: 0 auto 2.5rem auto;
+                padding: 0 1.2rem;
+            }
+
+            .gallery-header .section-title {
+                font-size: 1.85rem;
+                letter-spacing: 2px;
+            }
+
+            .gallery-header p {
+                font-size: 0.82rem !important;
+                line-height: 1.6;
+                margin-top: 0.6rem !important;
+            }
+
+            .filter-tags {
+                gap: 0.5rem;
+                margin-top: 1.2rem;
+            }
+
+            .filter-tags li {
+                font-size: 0.58rem;
+                letter-spacing: 1.5px;
+                padding: 0.35rem 0.8rem;
+            }
+
             .reverse-parallax-wrapper {
-                height: auto;
-                min-height: 80vh;
-                overflow: visible;
-                padding: 2.5rem 0;
+                height: 100vh;
+                height: 100svh;
+                overflow: hidden;
+                padding: 0;
+                background: var(--bg-secondary);
             }
 
             .reverse-columns-track {
-                grid-template-columns: 1fr;
-                gap: 1.8rem;
-                width: 90vw;
-                height: auto;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+                width: 96vw;
+                max-width: 100%;
+                margin: 0 auto;
+                height: 100%;
             }
 
             .parallax-col {
-                gap: 1.8rem;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                will-change: transform;
+                transform: translateZ(0);
+            }
+
+            .gallery-card {
+                border-radius: 4px;
             }
 
             .card-tall {
-                height: 50vh;
+                height: 32vh;
+                min-height: 190px;
             }
 
             .card-medium {
-                height: 42vh;
+                height: 25vh;
+                min-height: 155px;
             }
 
             .card-square {
-                height: 35vh;
+                height: 20vh;
+                min-height: 130px;
+            }
+
+            .card-meta {
+                padding: 0.8rem 0.6rem;
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .card-category {
+                font-size: 0.52rem;
+                letter-spacing: 1px;
+                margin-bottom: 0.15rem;
+            }
+
+            .card-title {
+                font-size: 0.78rem;
+                line-height: 1.2;
             }
 
             .nav-toggle {
