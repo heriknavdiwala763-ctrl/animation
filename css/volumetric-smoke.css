@@ -240,17 +240,41 @@
 ---------------------------------------------------- */
 @media (max-width: 768px) {
     .smoke-video-viewport {
-        width: 94vw;
-        height: 60vh;
+        width: 95vw;
+        height: 52vh;
         border-radius: 10px;
     }
     .smoke-text-stage {
-        bottom: 5%;
+        bottom: 6%;
+        width: 95vw;
     }
     .smoke-main-title {
-        letter-spacing: 4px;
+        font-size: clamp(1.8rem, 6vw, 2.4rem);
+        letter-spacing: 3px;
+    }
+    .smoke-subhead-pill {
+        font-size: 0.62rem;
+        letter-spacing: 2px;
+        padding: 0.35rem 1rem;
+        margin-bottom: 0.8rem;
+    }
+    .smoke-tagline {
+        font-size: 0.95rem;
     }
     .smoke-scroll-hint {
         display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .smoke-video-viewport {
+        height: 44vh;
+    }
+    .smoke-main-title {
+        font-size: 1.6rem;
+        letter-spacing: 2px;
+    }
+    .smoke-tagline {
+        font-size: 0.85rem;
     }
 }

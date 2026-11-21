@@ -1523,29 +1523,75 @@
 
         @media (max-width: 480px) {
             .brand-title-text {
-                font-size: 1rem;
+                font-size: 0.95rem;
                 letter-spacing: 1.5px;
             }
 
             .logo-subtext {
-                font-size: 0.55rem;
-                letter-spacing: 2px;
+                font-size: 0.52rem;
+                letter-spacing: 1.5px;
+            }
+
+            .brand-icon-img {
+                height: 32px;
+            }
+
+            .site-navbar {
+                padding: 0.8rem 1rem;
+                height: 60px;
             }
 
             .hero-main-brand {
-                letter-spacing: 5px;
+                letter-spacing: 4px;
+                font-size: clamp(2.4rem, 9vw, 3.6rem);
             }
 
             .btn-luxury {
-                padding: 0.9rem 1.8rem;
-                font-size: 0.72rem;
+                padding: 0.85rem 1.6rem;
+                font-size: 0.68rem;
                 letter-spacing: 2px;
             }
 
             .section-about,
             .section-films,
             .section-contact {
-                padding: 4.5rem 1.2rem;
+                padding: 4rem 1rem;
+            }
+
+            .reverse-columns-track {
+                gap: 6px;
+                width: 98vw;
+            }
+
+            .parallax-col {
+                gap: 6px;
+            }
+
+            .card-tall {
+                height: 28vh;
+                min-height: 170px;
+            }
+
+            .card-medium {
+                height: 22vh;
+                min-height: 140px;
+            }
+
+            .card-square {
+                height: 18vh;
+                min-height: 120px;
+            }
+
+            .card-meta {
+                padding: 0.5rem 0.4rem;
+            }
+
+            .card-category {
+                font-size: 0.48rem;
+            }
+
+            .card-title {
+                font-size: 0.72rem;
             }
         }
 
